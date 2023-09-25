@@ -53,3 +53,7 @@ buildNumber.properties
 # Javadoc
 # -----------------------------------
 doc/
+
+# Git
+# -----------------------------------
+.gitignore
