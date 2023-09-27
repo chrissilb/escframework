@@ -5,9 +5,18 @@ import java.util.Objects;
 
 import de.gwasch.code.escframework.components.utils.MetaMethod;
 import de.gwasch.code.escframework.components.utils.ProxyWrapper;
+import de.gwasch.code.escframework.components.utils.Skeleton;
+import de.gwasch.code.escframework.components.utils.Stub;
 import de.gwasch.code.escframework.events.events.AbstractEvent;
+import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 
-//NOTE: the source of an InvocationEvent must be a dynamic proxy.
+/** 
+ * An {@code InvocationEvent} is used to communicate between {@link Stub} towards {@link Skeleton}.
+ * {@link #getSource()} of an InvocationEvent must be a dynamic proxy which is the case for all components.
+ * An {@code InvocationEvent} can be handled by {@link PatternMatcher} exclusively if it consumes those events.
+ * 
+ * @see PatternMatcher
+ */
 public class InvocationEvent extends AbstractEvent {
 
 	private MetaMethod method;

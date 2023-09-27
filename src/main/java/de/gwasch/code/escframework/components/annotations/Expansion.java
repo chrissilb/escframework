@@ -5,6 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/** 
+ * Indicates a field as an {@code Expansion}.
+ */
 @Retention(RetentionPolicy.RUNTIME) 
 @Target(ElementType.FIELD) 
 public @interface Expansion {

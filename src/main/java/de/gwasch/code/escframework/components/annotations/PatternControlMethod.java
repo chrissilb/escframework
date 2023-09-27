@@ -6,6 +6,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Method will be generated in Interface.
+ */
 @Retention(RetentionPolicy.RUNTIME) 
 @Target(ElementType.TYPE) 
 @Repeatable(PatternControlMethodList.class)

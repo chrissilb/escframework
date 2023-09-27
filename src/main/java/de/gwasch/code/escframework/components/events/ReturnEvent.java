@@ -3,6 +3,9 @@ package de.gwasch.code.escframework.components.events;
 import de.gwasch.code.escframework.components.utils.Skeleton;
 import de.gwasch.code.escframework.events.events.AbstractEvent;
 
+/**
+ * A {@code ReturnEvent} gives feedback to an {@link InvocationEvent}.
+ */
 //todo, methode fehlt zum vergleich?
 public class ReturnEvent extends AbstractEvent {
 

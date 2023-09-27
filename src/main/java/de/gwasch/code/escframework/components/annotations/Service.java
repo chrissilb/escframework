@@ -5,6 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Indicates a class as a {@code Service}.
+ */
 @Retention(RetentionPolicy.RUNTIME) 
 @Target(ElementType.TYPE) 
 public @interface Service {
