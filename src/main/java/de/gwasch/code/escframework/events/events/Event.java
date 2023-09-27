@@ -1,6 +1,9 @@
 package de.gwasch.code.escframework.events.events;
 import java.util.Queue;
 
+/**
+ * {@code Event} is the main interface of all events.
+ */
 public interface Event extends Comparable<Event>, Cloneable {
 	
 	int getId();
