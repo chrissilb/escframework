@@ -3,6 +3,11 @@ package de.gwasch.code.escframework.events.handler;
 import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.processors.Processor;
 
+/**
+ * Collects {@link Callback}s of multiple successor {@link Processor}s and OR-links {@code success}.
+ * 
+ * @param <E> the event type considered by the {@code MergeCallbackHandler}
+ */
 public class MergeCallbackHandler<E extends Event> implements CallbackListener<E> {
 
 	private int nrRemainingCallbacks;
@@ -28,7 +33,6 @@ public class MergeCallbackHandler<E extends Event> implements CallbackListener<E
 		this.success |= success;
 		
 		if (nrRemainingCallbacks == 0) {
-			//processor.callback(callbackEvent, this.success);
 			Processor.callbackGeneric(callbackEvent, this.success, null);
 		}
 	}
