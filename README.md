@@ -17,6 +17,7 @@ todo
 * Provide autoDelegate
 * Provide inheritance of extensions
 * Provide remote proxy
+* Provide Garbage Collection for components
 * Provide ManagedThreadPushAction
 * Installation and user guide
 * Put on Maven Central
