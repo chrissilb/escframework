@@ -26,7 +26,7 @@ todo
 If YOU like to contribute to the project this is what you could do:
 * The escframework should be also provided in other programming languages, e.g. C++, C#, Python. This should not be done manually but AI-supported.
 * The escframework should support web development.
-* The slides on [gwasch.de](https://gwasch.de) should be translated from German into English. This should not be done manually but AI-supported.
+* The slides on [gwasch.de](https://gwasch.de) should be translated from German into English. This should not be done manually but AI-supported into as much languages as possible.
 * Test the framework and report bugs.
 
 Thank you very much!
