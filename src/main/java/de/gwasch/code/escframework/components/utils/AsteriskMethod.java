@@ -2,6 +2,11 @@ package de.gwasch.code.escframework.components.utils;
 
 import java.lang.reflect.Method;
 
+/**
+ * A {@link MetaMethod} which is annotated by {@link Asterisk}
+ * 
+ * @see InstanceAllocator
+ */
 public class AsteriskMethod extends MetaMethod {
 
 	private final AsteriskType asteriskType;

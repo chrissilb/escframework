@@ -86,10 +86,6 @@ public class Skeleton {
 			
 			MetaMethod metaMethod = event.getMethod();
 			assert(metaMethod.isOneway() && method.getReturnType() == Void.TYPE || !metaMethod.isOneway() && method.getReturnType() != Void.TYPE);
-
-//			if (method.getName().equals("startAutoLogout")) {
-//				System.out.println("hier");
-//			}
 			
 			try {
 				returnValue = method.invoke(service, args);
@@ -143,10 +139,6 @@ public class Skeleton {
 
 		public boolean onProcess(InvocationEvent event) {
 			
-//			if (event.getMethod().getMethod().getName() == "xstart") {
-//				System.out.println("hier");
-//			}
-			
 			assert event.getMethod().getMethod() != null;
 			
 			Invocation invocation = null;
@@ -168,7 +160,7 @@ public class Skeleton {
 				}
 
 				
-				invokeAsterisks(invocation, AsteriskType.BEFORE_ALLL);
+				invokeAsterisks(invocation, AsteriskType.BEFORE_ALL);
 				
 				if (delegateNeeded) {
 					invokeAsterisks(invocation, AsteriskType.BEFORE_ELSE);

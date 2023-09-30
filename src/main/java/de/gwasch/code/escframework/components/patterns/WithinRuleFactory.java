@@ -2,15 +2,20 @@ package de.gwasch.code.escframework.components.patterns;
 
 import java.lang.reflect.Method;
 
+import de.gwasch.code.escframework.components.annotations.Tick;
 import de.gwasch.code.escframework.components.annotations.Within;
 import de.gwasch.code.escframework.components.events.InvocationEvent;
 import de.gwasch.code.escframework.components.utils.InstanceAllocator;
 import de.gwasch.code.escframework.events.events.Event;
+import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 import de.gwasch.code.escframework.states.functions.Function;
 import de.gwasch.code.escframework.states.states.FunctionState;
 
+/**
+ * Creates a {@link Rule} for the {@link PatternMatcher} indicated by {@link Tick}.
+ */
 public class WithinRuleFactory implements RuleFactory<Within> {
 
 	public Rule createRule(Within within, Object thiz, Method method) {

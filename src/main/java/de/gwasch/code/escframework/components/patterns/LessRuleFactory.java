@@ -6,9 +6,13 @@ import de.gwasch.code.escframework.components.annotations.Less;
 import de.gwasch.code.escframework.components.events.InvocationEvent;
 import de.gwasch.code.escframework.components.utils.InstanceAllocator;
 import de.gwasch.code.escframework.events.patterns.CompareCondition;
+import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 
+/**
+ * Creates a {@link Rule} for the {@link PatternMatcher} indicated by {@link Less}.
+ */
 public class LessRuleFactory implements RuleFactory<Less> {
 
 	public Rule createRule(Less less, Object thiz, Method method) {

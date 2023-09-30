@@ -59,7 +59,10 @@ import de.gwasch.code.escframework.events.utils.PNBuilder;
 import de.gwasch.code.escframework.events.utils.TimerFactory;
 import de.gwasch.code.escframework.utils.gapsort.GapSorter;
 
-
+/**
+ * The {@code InstanceAllocator} is the central interface to an application of the component framework.
+ * In particular, it creates components via {@link #create(Class, Object...)}.
+ */
 public class InstanceAllocator {
 	
 	private static class ReturnPredicate implements Predicate<ReturnEvent> {

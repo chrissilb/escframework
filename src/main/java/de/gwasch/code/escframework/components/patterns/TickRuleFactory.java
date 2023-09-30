@@ -5,9 +5,13 @@ import java.lang.reflect.Method;
 import de.gwasch.code.escframework.components.annotations.Tick;
 import de.gwasch.code.escframework.components.events.InvocationEvent;
 import de.gwasch.code.escframework.components.utils.InstanceAllocator;
+import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 
+/**
+ * Creates a {@link Rule} for the {@link PatternMatcher} indicated by {@link Tick}.
+ */
 public class TickRuleFactory implements RuleFactory<Tick> {
 
 	public Rule createRule(Tick tick, Object thiz, Method method) {
