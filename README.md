@@ -17,7 +17,7 @@ The escframework is an universal communication framework. It consists of Event, 
 * In project right click on "pom.xml" - Run As - Maven install
 
 ## Usage
-see https://gwasch.de/escframework.php - "Folien" (only available in German so far)
+See https://gwasch.de/escframework.php - "Folien" (only available in German so far)
 
 ## Next Steps
 * Provide DemoLibrary
