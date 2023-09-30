@@ -2,10 +2,22 @@
 The escframework is an universal communication framework. It consists of Event, State and Component framework.
 
 ## Installation
-todo
+* Install eclipse for Java Developers
+* Open eclipse
+* Create new Workspace (e.g. "esc") or use an existing one
+* Show View "Git Repositories"
+* Click on the three vertical dots - "Clone a Git Repository..."
+* "Clone URI"
+* Enter Git URI from github.com
+* Select "main" branch
+* Select local folder for the git repository
+* "Finish"
+* Right click on the repository in "Git Repositories" - select "Import Projects..."
+* "Finish"
+* In project right click on "pom.xml" - Run As - Maven install
 
 ## Usage
-todo
+See https://gwasch.de/escframework.php - "Folien" (only available in German so far)
 
 ## Next Steps
 * Provide DemoLibrary
