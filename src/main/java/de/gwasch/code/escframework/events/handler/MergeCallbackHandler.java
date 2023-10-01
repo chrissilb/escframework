@@ -4,9 +4,13 @@ import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.processors.Processor;
 
 /**
- * Collects {@link Callback}s of multiple successor {@link Processor}s and OR-links {@code success}.
+ * Collects {@code Callbacks} of multiple successor {@code Processors} and OR-links {@code success}.
+ * This class can be used by event processors whith multiple successor processors.
  * 
  * @param <E> the event type considered by the {@code MergeCallbackHandler}
+ * 
+ * @see Processor
+ * @see Callback
  */
 public class MergeCallbackHandler<E extends Event> implements CallbackListener<E> {
 
