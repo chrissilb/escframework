@@ -2,7 +2,7 @@
 The escframework is an universal communication framework. It consists of Event, State and Component framework.
 
 ## Installation
-* Install eclipse for Java Developers
+* Install "Eclipse IDE for Java Developers"
 * Open eclipse
 * Create new Workspace (e.g. "esc") or use an existing one
 * Show View "Git Repositories"
