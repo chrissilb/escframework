@@ -8,7 +8,7 @@ import de.gwasch.code.escframework.states.states.SimpleState;
 import de.gwasch.code.escframework.states.states.State;
 
 /**
- * Common Superclass of Rules that are handled by {@link PatternMatcher} PatternMatcher.
+ * Common Superclass of Rules that are handled by the {@link PatternMatcher}.
  */
 public abstract class Rule {
 	
