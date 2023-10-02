@@ -14,7 +14,6 @@
 
   	<developers>
     	<developer>
-      		<id>chsi</id>
       		<name>Christian Silberbauer</name>
       		<email>christian.silberbauer@gwasch.de</email>
     	</developer>
@@ -33,10 +32,16 @@
 			<name>GitHub Packages</name>
 			<url>https://maven.pkg.github.com/chrissilb/escframework</url>
 		</repository>
+<!--		<repository>
+			<id>ossrh</id>
+			<name>Central Repository OSSRH</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>-->
 		<snapshotRepository>
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+
 	</distributionManagement>
     
   	<properties>

@@ -6,12 +6,18 @@ import java.util.ListIterator;
 
 import de.gwasch.code.escframework.events.events.Event;
 
-//NOTE: a range is in descending order form latest to oldest events
+/**
+ * A {@code Range} collects events with a certain maximum age.
+ * 
+ * @see TriggerEventControl
+ * @see PatternMatcher
+ */
 public class Range {
 
 	private int maxSize;
 	private long maxAge;
 	
+	//NOTE: events are in descending order form latest to oldest
 	private List<Event> events;
 	
 	public Range(int maxSize, long maxAge) {
@@ -19,10 +25,6 @@ public class Range {
 		this.maxAge = maxAge;
 		
 		events = new LinkedList<>();
-	}
-	
-	public Range(int maxSize) {
-		this(maxSize, -1);
 	}
 	
 	public void add(Event event) {
