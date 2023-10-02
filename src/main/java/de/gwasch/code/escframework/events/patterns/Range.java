@@ -17,7 +17,7 @@ public class Range {
 	private int maxSize;
 	private long maxAge;
 	
-	//NOTE: events are in descending order form latest to oldest
+	//NOTE: events are in descending order form latest to oldest.
 	private List<Event> events;
 	
 	public Range(int maxSize, long maxAge) {
