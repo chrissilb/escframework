@@ -5,8 +5,6 @@ import de.gwasch.code.escframework.events.processors.Dispatcher;
 /**
  * The {@code StateListener} allows to register for state events at the {@link Dispatcher}.
  * 
- * @param <E> the event type considered by the {@code StateListener}
- * 
  * @see Dispatcher
  * @see StateAdapter
  */

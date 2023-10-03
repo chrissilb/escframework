@@ -3,6 +3,7 @@ package de.gwasch.code.escframework.components.patterns;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 import de.gwasch.code.escframework.events.patterns.Rule;
 
 /**

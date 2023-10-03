@@ -7,6 +7,7 @@ import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.handler.EventAdapter;
 import de.gwasch.code.escframework.events.handler.EventListener;
 
+//todo, Semaphore entfernen
 public class EventInputStream<E extends Event> {
 
 	private final Object sema = new Object();

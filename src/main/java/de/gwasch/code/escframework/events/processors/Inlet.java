@@ -67,12 +67,8 @@ public class Inlet<E extends Event> extends Processor<E> {
 		currentEvent = null;
 		callbackHandler = new CallbackHandler();
 		
-//		setHandler(null, new ProcessHandler());
-//		setHandler(ActivateEvent.class, new ActivateHandler());
-//		setHandler(DeactivateEvent.class, new DeactivateHandler());
 		installHandler(SuspendEvent.class, new SuspendHandler());
 		installHandler(ResumeEvent.class, new ResumeHandler());
-//		setHandler(CancelEvent.class, new CancelHandler());
 	}
 
 	public Inlet(EventSource<? extends E> source) {

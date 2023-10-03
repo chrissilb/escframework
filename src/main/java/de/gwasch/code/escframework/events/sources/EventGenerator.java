@@ -3,9 +3,16 @@ package de.gwasch.code.escframework.events.sources;
 import java.util.Random;
 
 import de.gwasch.code.escframework.events.events.Event;
+import de.gwasch.code.escframework.events.processors.Inlet;
 import de.gwasch.code.escframework.events.utils.TimeUtil;
 
-
+/**
+ * {@code EventGenerator} is an {@code EventSource} that cyclicly creates events based on an {@code EventFactory}. 
+ * <p>
+ * For example, this is used by {@link Inlet}.
+ * 
+ * @param <E> the event type considered by the {@code EventGenerator} 
+ */
 public class EventGenerator<E extends Event> implements EventSource<E> {
 
 	private EventFactory<E> eventFactory;

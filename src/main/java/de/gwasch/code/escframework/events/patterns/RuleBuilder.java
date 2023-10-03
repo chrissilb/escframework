@@ -3,6 +3,10 @@ package de.gwasch.code.escframework.events.patterns;
 import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.states.states.State;
 
+/**
+ * {@code RuleBuilder} can be used to build a {@code GeneralRule}.
+ * It follows the Builder Design Pattern.
+ */
 public class RuleBuilder {
 
 	private Rule rule;

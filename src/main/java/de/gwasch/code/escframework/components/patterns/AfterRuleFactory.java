@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 
 import de.gwasch.code.escframework.components.annotations.After;
 import de.gwasch.code.escframework.components.utils.InstanceAllocator;
+import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 

@@ -5,6 +5,10 @@ import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.events.ResumeEvent;
 import de.gwasch.code.escframework.events.events.SuspendEvent;
 
+/**
+ * Standard implementation of the {@code Rule} interface
+ */
+
 public class GeneralRule extends Rule {
 
 	private TriggerEventControl tec;
