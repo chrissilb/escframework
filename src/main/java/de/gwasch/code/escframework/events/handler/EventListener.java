@@ -1,6 +1,7 @@
 package de.gwasch.code.escframework.events.handler;
 
 import de.gwasch.code.escframework.events.events.Event;
+import de.gwasch.code.escframework.events.processors.Dispatcher;
 
 /**
  * The {@code EventListener} allows to register for process events at the {@link Dispatcher}.

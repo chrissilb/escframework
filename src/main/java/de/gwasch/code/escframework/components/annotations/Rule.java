@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import de.gwasch.code.escframework.components.utils.CodeGenerator;
+import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 
 /**
  * Indicates that an annotation is a {@code Rule} of the {@link PatternMatcher}. 

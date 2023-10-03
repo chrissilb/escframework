@@ -1,5 +1,7 @@
 package de.gwasch.code.escframework.events.handler;
 
+import de.gwasch.code.escframework.events.processors.Dispatcher;
+
 /**
  * The {@code StateListener} allows to register for state events at the {@link Dispatcher}.
  * 

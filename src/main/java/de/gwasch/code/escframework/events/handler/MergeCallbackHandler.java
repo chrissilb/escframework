@@ -1,5 +1,6 @@
 package de.gwasch.code.escframework.events.handler;
 
+import de.gwasch.code.escframework.events.events.Callback;
 import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.processors.Processor;
 

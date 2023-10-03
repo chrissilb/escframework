@@ -1,5 +1,7 @@
 package de.gwasch.code.escframework.events.events;
 
+import de.gwasch.code.escframework.events.processors.Scheduler;
+
 /**
  * {@code Action} is the main interface of all actions.
  * <p>

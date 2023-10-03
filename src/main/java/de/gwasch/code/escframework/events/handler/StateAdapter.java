@@ -3,8 +3,6 @@ package de.gwasch.code.escframework.events.handler;
 /** 
  * An abstract adapter class. The methods in this class are empty. 
  * It exists as convenience for creating concrete listeners.
- * 
- * @param <E> the event type considered by the {@code StateListener}
  */
 public abstract class StateAdapter implements StateListener {
 

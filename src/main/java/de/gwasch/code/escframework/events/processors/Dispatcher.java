@@ -312,7 +312,6 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 	
 	/**
 	 * Initializes a newly created {@code Dispatcher}. The name of this {@code Processor} is an empty {@code String}.
-	 * @param name The name of this {@code Processor}
 	 */
 	public Dispatcher() {
 		this("");

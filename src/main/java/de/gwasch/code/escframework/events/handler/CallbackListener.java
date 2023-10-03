@@ -1,6 +1,7 @@
 package de.gwasch.code.escframework.events.handler;
 
 import de.gwasch.code.escframework.events.events.Event;
+import de.gwasch.code.escframework.events.processors.Processor;
 
 /**
  * The {@code CallbackListener} enables {@code Processor}s to register for the backward communication of process events.

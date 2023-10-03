@@ -2,6 +2,8 @@ package de.gwasch.code.escframework.components.utils;
 
 import java.lang.reflect.Method;
 
+import de.gwasch.code.escframework.components.annotations.Asterisk;
+
 /**
  * A {@link MetaMethod} which is annotated by {@link Asterisk}
  * 

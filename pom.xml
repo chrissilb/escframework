@@ -27,16 +27,17 @@
 	</licenses>
 	  
 	<distributionManagement>
-		<repository>
+<!--		<repository>
 			<id>github</id>
 			<name>GitHub Packages</name>
 			<url>https://maven.pkg.github.com/chrissilb/escframework</url>
-		</repository>
-<!--		<repository>
+		</repository>-->
+		<!-- todo, add downloadUrl: https://maven.apache.org/pom.html#Distribution_Management -->
+		<repository>
 			<id>ossrh</id>
 			<name>Central Repository OSSRH</name>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>-->
+		</repository>
 		<snapshotRepository>
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
