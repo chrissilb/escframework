@@ -13,6 +13,11 @@ import de.gwasch.code.escframework.events.processors.Dispatcher;
 import de.gwasch.code.escframework.events.processors.Processor;
 
 //todo, generieren von abstrakten events anhand von patterns...
+/**
+ * A {@code PatternMatcher} registers for events at a {@link Dispatcher}. It is parameterized by
+ * a set of rules. Every {@link Rule} interprets incoming events and pushes new events into the
+ * processor network according to its algorithm.
+ */
 public class PatternMatcher {
 
 	class ActionFinishEventControl extends EventControl {

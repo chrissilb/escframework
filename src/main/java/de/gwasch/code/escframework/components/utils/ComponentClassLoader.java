@@ -11,13 +11,16 @@ import de.gwasch.code.escframework.components.annotations.Extension;
 import de.gwasch.code.escframework.components.annotations.Service;
 import de.gwasch.code.escframework.components.exceptions.GenerationException;
 
+/**
+ * {@code ComponentClassLoader} loads components, i.e. classes annotated by {@link Service} or {@link Extension}.
+ */
 public class ComponentClassLoader {
 	
-	private ClassLoader contextClassLoader;
+	private ClassLoader classLoader;
 	private String basePackageName;
 
-	public ComponentClassLoader(ClassLoader contextClassLoader, String basePackageName) {
-		this.contextClassLoader = contextClassLoader;
+	public ComponentClassLoader(ClassLoader classLoader, String basePackageName) {
+		this.classLoader = classLoader;
 		this.basePackageName = basePackageName;
 	}
 	
@@ -39,7 +42,7 @@ public class ComponentClassLoader {
 			String path = basePackageName.replace('.', '/');
 	
 			
-			Enumeration<URL> resources = contextClassLoader.getResources(path);
+			Enumeration<URL> resources = classLoader.getResources(path);
 	
 			List<File> dirs = new ArrayList<File>();
 	
@@ -83,7 +86,7 @@ public class ComponentClassLoader {
 			else if (file.getName().endsWith(".class")) {
 				String clsname = packageName + file.getName().substring(0, file.getName().length() - 6);
 				
-				Class<?> cls = contextClassLoader.loadClass(clsname);
+				Class<?> cls = classLoader.loadClass(clsname);
 				
 				if (cls.isAnnotationPresent(Service.class) || cls.isAnnotationPresent(Extension.class)) {
 					classes.add(cls);

@@ -121,14 +121,10 @@ public class MetaMethod {
 		MetaMethod cmp = (MetaMethod)obj;
 		
 		boolean ret = method.equals(cmp.method);
-//		boolean ret = method.getName().equals(cmp.method.getName());
-//		ret &= method.getParameters().equals(cmp.method.getParameterTypes());
-//		ret &= method.getParameterTypes().equals(cmp.method.getParameterTypes());
 		return ret;
 	}
 	
 	public int hashCode() {
-//		return Objects.hash(method.getName(), method.getParameterTypes());
 		return method.hashCode();
 	}
 	

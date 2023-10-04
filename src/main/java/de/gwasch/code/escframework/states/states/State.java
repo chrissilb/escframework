@@ -12,7 +12,11 @@ import de.gwasch.code.escframework.states.listeners.ActivityListener;
 import de.gwasch.code.escframework.states.transistionmodes.DirectTransition;
 import de.gwasch.code.escframework.states.transistionmodes.TransitionMode;
 
-
+/**
+ * {@code State} is the main class of all states. All states communicate via their own processor network.
+ * 
+ * @param <T> the type of the {@code State} value
+ */
 public abstract class State<T> {
 
 	private static Processor<Event> eventProcessor;

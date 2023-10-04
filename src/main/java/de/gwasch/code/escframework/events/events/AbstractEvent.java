@@ -7,7 +7,10 @@ import java.util.Queue;
 import java.util.Stack;
 
 
-
+/** 
+ * {@code AbstractEvent} is typically used as super class for concrete events.
+ * It provides the basic functionality of an {@code Event}.
+ */
 public abstract class AbstractEvent implements Event {
 
 	private int id;

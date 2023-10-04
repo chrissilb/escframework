@@ -61,7 +61,7 @@ import de.gwasch.code.escframework.utils.gapsort.GapSorter;
 
 /**
  * The {@code InstanceAllocator} is the central interface to an application of the component framework.
- * In particular, it creates components via {@link #create(Class, Object...)}.
+ * In particular, it creates services via {@link #create(Class, Object...)}.
  */
 public class InstanceAllocator {
 	
@@ -472,70 +472,7 @@ public class InstanceAllocator {
 		
 		return true;
 	}
-	
-//	private static Method getInterfaceMethod(Class<?> cls, String methodName) {
-//		
-//		for (Method method : cls.getDeclaredMethods()) {
-//			if (method.getName().equals(methodName) && method.getParameterCount() == 0) {
-//				return method;
-//			}
-//		}
-//		
-//		return null;
-//	}
-//	
-//	private static Method getInterfaceMethod(MetaType metaType, String methodName) {
-//		
-//		if (metaType == null) {
-//			return null;
-//		}
-//					
-//		Method method;		
-//		
-//		Class<?> cls = metaType.getInterfaceType();
-//		method = getInterfaceMethod(cls, methodName);
-//		if (method != null) return method;
-//		
-//		MetaType base = metaType.getActualBase();
-//		method = getInterfaceMethod(base, methodName);
-//		if (method != null) return method;
-//
-//		for (Field f : metaType.getExpFields()) {
-//			method = getInterfaceMethod(f.getType(), methodName);
-//			if (method != null) return method;
-//		}
-//		
-//		MetaType extending = metaType.getActualExtending();
-//		method = getInterfaceMethod(extending, methodName);
-//		return method;
-//	}
-//	
-//	
-//	private static InvocationEvent createInvocationEvent2(Object thiz, String methodName) {
-//		
-//		if (methodName == null || methodName.length() == 0) {
-//			return null;
-//		}
-//		
-//		Stub stub = (Stub)Proxy.getInvocationHandler(thiz);
-//		MetaType metaType = stub.getMetaType();
-//		
-//		Method method = getInterfaceMethod(metaType, methodName);
-//		
-//		if (method == null) {
-//			throw new UnknownMethodException("public void " + methodName + "()", metaType.getImplementationType());
-//		}
-//
-//		if (method.getReturnType() != void.class) {
-//			throw new InvalidMethodSignatureException(method, "'void " + method.getName() + "()'");
-//		}
-//
-//		MetaMethod metaMethod = new MetaMethod(method);
-//		InvocationEvent invocationEvent = createInvocationEvent(thiz, metaMethod);
-//		
-//		return invocationEvent;
-//	}
-	
+		
 	public static InvocationEvent createInvocationEvent(Object thiz, String methodName) {
 		return createInvocationEvent(thiz, methodName, new Class<?>[0], void.class);
 	}
@@ -583,6 +520,22 @@ public class InstanceAllocator {
 	private static List<Skeleton> skeletons;
 	
 	//todo, aussagekräftigere exceptions nutzen, insb. auch invalidtype
+	/**
+	 * Creates a {@code Service}
+	 * <p>
+	 * The {@code Service} instance is represented as a dynamic proxy. Involved extensions are included. Attached rules
+	 * are created and registered at the {@code PatternMatcher}.
+	 * 
+	 * @param <T> service interface type
+	 * @param interfaceType {@code Class} of the service interface type. It must reflect an instantiable service interface. 
+	 * @param args constructor arguments. If avoidable {@code args} shall not be used. Instead services should provide
+	 *        default constructors, only. Otherwise corresponding parameterization is not type-safe.
+	 *        
+	 * @return the service instance
+	 * 
+	 * @see Proxy
+	 * @see PatternMatcher
+	 */
 	public static<T> T create(Class<T> interfaceType, Object... args) {
 
 		MetaType metaType = (MetaType)types.get(interfaceType);
@@ -597,7 +550,6 @@ public class InstanceAllocator {
 			T proxy = doCreate(interfaceType, metaType, null, args);
 			
 			Stub stub = (Stub)Proxy.getInvocationHandler(proxy);
-//			System.out.println(stub);
 			stub.setServiceEntrance(true);
 			
 			setThiz(proxy);
