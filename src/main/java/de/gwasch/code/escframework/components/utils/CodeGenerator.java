@@ -2,7 +2,6 @@ package de.gwasch.code.escframework.components.utils;
 
 import static org.reflections.scanners.Scanners.TypesAnnotated;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -137,7 +136,8 @@ public class CodeGenerator {
 	}
 	
 	private String basePackageName;
-	private String outputFolder;
+//	private String outputFolder;
+	private Path outputPath;
 	private Map<String, Class<?>> systemRuleAnnotations;
 	private Map<String, AnnotationDeclaration> appRuleAnnotations;
 
@@ -155,28 +155,33 @@ public class CodeGenerator {
 	private Set<String> expansionTypes;
 	private Map<String, Set<String>> serviceSubtypes;
 	
-	public CodeGenerator(String sourceFolder, String basePackageName, String outputFolder) {
+
+	public CodeGenerator(Path sourcePath, String basePackageName, Path outputPath) {
 
 		if (basePackageName == null || basePackageName.length() == 0) {
 			throw new GenerationException("basePackageName is undefined.");
 		}
 		this.basePackageName = basePackageName;
-		this.outputFolder = outputFolder;
+//		this.outputFolder = outputPath.toString();
+		this.outputPath = outputPath;
 		
 		systemRuleAnnotations = new HashMap<>();
 		loadFrameworkRuleAnnotations();
 		appRuleAnnotations = new HashMap<>();
 				
-		Path path = FileSystems.getDefault().getPath(sourceFolder);
-		sourceRoot = new SourceRoot(path);
-		path = FileSystems.getDefault().getPath(outputFolder);
+		sourceRoot = new SourceRoot(sourcePath);
+
 		try {
-			Files.createDirectories(path);
+			Files.createDirectories(outputPath);
 		}
 		catch(IOException e) {
 			throw new GenerationException(e);
 		}
-		outputRoot = new SourceRoot(path);
+		outputRoot = new SourceRoot(outputPath);
+	}
+
+	public CodeGenerator(String sourceFolder, String basePackageName, String outputFolder) {
+		this(Path.of(sourceFolder), basePackageName, Path.of(outputFolder));
 	}
 	
 	protected String getInterfaceName(String implTypeName) {
@@ -200,32 +205,6 @@ public class CodeGenerator {
 		for (Class<?> ruleClass : ruleClasses) {
 			systemRuleAnnotations.put(ruleClass.getName(), ruleClass);
 		}
-		
-//		try {
-//			String packageName = Rule.class.getPackageName();
-//			String packagePath = packageName.replace('.', '/');
-//			ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-//			URL resource = classLoader.getResource(packagePath);
-//		    String folderPathName = resource.getPath();
-//	        File folder = new File(folderPathName);
-//            File[] files = folder.listFiles();
-//            
-//            for (File file : files) {
-//                String className = file.getName();
-//                
-//                if (className.endsWith(".class")) {
-//                    className = packageName + "." + className.substring(0, className.length() - 6);
-//                    
-//                    Class<?> cls = classLoader.loadClass(className);
-//					if (cls.isAnnotationPresent(Rule.class)) {
-//						systemRuleAnnotations.put(className, cls);
-//					}
-//                }
-//            }
-//		} 
-//		catch (Exception e) {
-//			throw new GenerationException(e);
-//		}
 	}
 		
 	private static String getPackageName(String name) {
@@ -731,8 +710,9 @@ public class CodeGenerator {
 			JavaParser parser = new JavaParser();
 	        ParseResult<CompilationUnit> pr = parser.parse(genTypes.get(typeName).toString());
 			CompilationUnit cu = pr.getResult().get();
-			String pathstr = outputFolder + File.separator + typeName.replace(".", File.separator) + ".java";
-			Path path = FileSystems.getDefault().getPath(pathstr);
+//			String pathstr = outputFolder + File.separator + typeName.replace(".", File.separator) + ".java";
+//			Path path = FileSystems.getDefault().getPath(pathstr);
+			Path path = outputPath.resolve(typeName.replace(".", FileSystems.getDefault().getSeparator()) + ".java");
 			cu.setStorage(path);
 			outputRoot.add(cu);
 		}
