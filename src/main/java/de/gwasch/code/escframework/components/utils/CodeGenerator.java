@@ -162,7 +162,6 @@ public class CodeGenerator {
 			throw new GenerationException("basePackageName is undefined.");
 		}
 		this.basePackageName = basePackageName;
-//		this.outputFolder = outputPath.toString();
 		this.outputPath = outputPath;
 		
 		systemRuleAnnotations = new HashMap<>();
@@ -710,8 +709,6 @@ public class CodeGenerator {
 			JavaParser parser = new JavaParser();
 	        ParseResult<CompilationUnit> pr = parser.parse(genTypes.get(typeName).toString());
 			CompilationUnit cu = pr.getResult().get();
-//			String pathstr = outputFolder + File.separator + typeName.replace(".", File.separator) + ".java";
-//			Path path = FileSystems.getDefault().getPath(pathstr);
 			Path path = outputPath.resolve(typeName.replace(".", FileSystems.getDefault().getSeparator()) + ".java");
 			cu.setStorage(path);
 			outputRoot.add(cu);
