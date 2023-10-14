@@ -1,6 +1,6 @@
 package de.gwasch.code.escframework.states.states;
 
-import de.gwasch.code.escframework.events.handler.EventListener;
+import de.gwasch.code.escframework.events.listeners.EventListener;
 import de.gwasch.code.escframework.states.events.TransitionEvent;
 import de.gwasch.code.escframework.states.listeners.ActivityListener;
 import de.gwasch.code.escframework.states.transistionmodes.TransitionMode;

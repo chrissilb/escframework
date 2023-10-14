@@ -16,10 +16,10 @@ import de.gwasch.code.escframework.events.events.DeactivateEvent;
 import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.events.ResumeEvent;
 import de.gwasch.code.escframework.events.events.SuspendEvent;
-import de.gwasch.code.escframework.events.handler.CallbackListener;
-import de.gwasch.code.escframework.events.handler.EventListener;
-import de.gwasch.code.escframework.events.handler.ProcessListener;
-import de.gwasch.code.escframework.events.handler.StateListener;
+import de.gwasch.code.escframework.events.listeners.CallbackListener;
+import de.gwasch.code.escframework.events.listeners.EventListener;
+import de.gwasch.code.escframework.events.listeners.ProcessListener;
+import de.gwasch.code.escframework.events.listeners.StateListener;
 
 //todo, StateListener-einhängen berücksichtigen
 

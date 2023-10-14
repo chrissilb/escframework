@@ -6,8 +6,8 @@ import java.lang.reflect.Method;
 import de.gwasch.code.escframework.components.events.InvocationEvent;
 import de.gwasch.code.escframework.components.events.ReturnEvent;
 import de.gwasch.code.escframework.components.exceptions.InvocationException;
-import de.gwasch.code.escframework.events.handler.EventAdapter;
-import de.gwasch.code.escframework.events.handler.EventListener;
+import de.gwasch.code.escframework.events.listeners.EventAdapter;
+import de.gwasch.code.escframework.events.listeners.EventListener;
 import de.gwasch.code.escframework.events.streams.EventOutputStream;
 
 public class Skeleton {

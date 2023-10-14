@@ -2,7 +2,7 @@ package de.gwasch.code.escframework.states.states;
 
 
 import de.gwasch.code.escframework.events.events.Event;
-import de.gwasch.code.escframework.events.handler.EventListener;
+import de.gwasch.code.escframework.events.listeners.EventListener;
 import de.gwasch.code.escframework.events.processors.Dispatcher;
 import de.gwasch.code.escframework.events.processors.Processor;
 import de.gwasch.code.escframework.events.processors.Scheduler;

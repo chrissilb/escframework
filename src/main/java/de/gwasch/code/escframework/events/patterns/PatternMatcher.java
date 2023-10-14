@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import de.gwasch.code.escframework.events.events.Event;
-import de.gwasch.code.escframework.events.handler.EventAdapter;
+import de.gwasch.code.escframework.events.listeners.EventAdapter;
 import de.gwasch.code.escframework.events.processors.Dispatcher;
 import de.gwasch.code.escframework.events.processors.Processor;
 

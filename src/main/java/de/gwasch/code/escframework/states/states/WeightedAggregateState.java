@@ -1,6 +1,6 @@
 package de.gwasch.code.escframework.states.states;
 
-import de.gwasch.code.escframework.events.handler.EventAdapter;
+import de.gwasch.code.escframework.events.listeners.EventAdapter;
 import de.gwasch.code.escframework.states.aggregations.DoubleWeightedAverage;
 import de.gwasch.code.escframework.states.events.TransitionEvent;
 

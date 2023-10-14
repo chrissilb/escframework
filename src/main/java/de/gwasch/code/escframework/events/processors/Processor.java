@@ -16,8 +16,8 @@ import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.events.PushAction;
 import de.gwasch.code.escframework.events.events.ResumeEvent;
 import de.gwasch.code.escframework.events.events.SuspendEvent;
-import de.gwasch.code.escframework.events.handler.CallbackListener;
-import de.gwasch.code.escframework.events.handler.ProcessListener;
+import de.gwasch.code.escframework.events.listeners.CallbackListener;
+import de.gwasch.code.escframework.events.listeners.ProcessListener;
 
 
 

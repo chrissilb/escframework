@@ -1,4 +1,4 @@
-package de.gwasch.code.escframework.events.handler;
+package de.gwasch.code.escframework.events.listeners;
 
 import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.processors.Processor;

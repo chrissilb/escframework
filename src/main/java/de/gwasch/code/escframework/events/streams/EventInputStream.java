@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import de.gwasch.code.escframework.events.events.Event;
-import de.gwasch.code.escframework.events.handler.EventAdapter;
-import de.gwasch.code.escframework.events.handler.EventListener;
+import de.gwasch.code.escframework.events.listeners.EventAdapter;
+import de.gwasch.code.escframework.events.listeners.EventListener;
 
 //todo, Semaphore entfernen
 public class EventInputStream<E extends Event> {

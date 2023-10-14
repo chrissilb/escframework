@@ -5,7 +5,7 @@ import javax.swing.SwingUtilities;
 
 import de.gwasch.code.escframework.events.events.Action;
 import de.gwasch.code.escframework.events.events.CancelEvent;
-import de.gwasch.code.escframework.events.handler.ProcessListener;
+import de.gwasch.code.escframework.events.listeners.ProcessListener;
 import de.gwasch.code.escframework.utils.logging.Logger;
 
 /**

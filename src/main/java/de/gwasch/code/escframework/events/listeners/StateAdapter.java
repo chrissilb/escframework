@@ -1,4 +1,4 @@
-package de.gwasch.code.escframework.events.handler;
+package de.gwasch.code.escframework.events.listeners;
 
 /** 
  * An abstract adapter class. The methods in this class are empty. 

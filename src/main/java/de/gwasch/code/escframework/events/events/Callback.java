@@ -1,6 +1,6 @@
 package de.gwasch.code.escframework.events.events;
 
-import de.gwasch.code.escframework.events.handler.CallbackListener;
+import de.gwasch.code.escframework.events.listeners.CallbackListener;
 
 public class Callback<E extends Event> {
 

@@ -3,7 +3,7 @@ package de.gwasch.code.escframework.states.functions;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import de.gwasch.code.escframework.events.handler.EventAdapter;
+import de.gwasch.code.escframework.events.listeners.EventAdapter;
 import de.gwasch.code.escframework.states.events.TransitionEvent;
 import de.gwasch.code.escframework.states.states.State;
 import de.gwasch.code.escframework.states.states.SimpleState;

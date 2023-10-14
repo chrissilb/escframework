@@ -2,8 +2,8 @@ package de.gwasch.code.escframework.events.processors;
 
 
 import de.gwasch.code.escframework.events.events.Event;
-import de.gwasch.code.escframework.events.handler.CallbackListener;
-import de.gwasch.code.escframework.events.handler.ProcessListener;
+import de.gwasch.code.escframework.events.listeners.CallbackListener;
+import de.gwasch.code.escframework.events.listeners.ProcessListener;
 import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 import de.gwasch.code.escframework.utils.logging.Logger;
 
