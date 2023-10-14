@@ -26,7 +26,7 @@ import de.gwasch.code.escframework.utils.logging.Logger;
 /**
  * A {@code Scheduler} buffers incoming events in a {@link Queue}. By default those events are handled FIFO. 
  * Although a {@code Scheduler} can be parameterized by a {@link PriorityQueue}. In this case events are treated 
- * according the implementation of the {@link Comparable} interface. For example, this used by the timer processing network
+ * according the implementation of the {@link Comparable} interface. For example, this is used by the timer processing network
  * (see {@link TimerFactory}) to process {@link TimerAction}s according to their {@link Event#getPushTime()}.
  * <p>
  * In opposite to all other standard event processors a {@code Scheduler} can have multiple successor processors.
@@ -34,7 +34,7 @@ import de.gwasch.code.escframework.utils.logging.Logger;
  * <p>
  * {@code Scheduler}s must be activated once all successors are defined.
  * 
- * @param <E> the event type considered by the {@code Scheduler}
+ * @param <E> The event type considered by the {@code Scheduler}.
  */
 public class Scheduler<E extends Event> extends Processor<E> {
 

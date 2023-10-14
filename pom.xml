@@ -5,13 +5,13 @@
   	<parent>
 	    <groupId>de.gwasch.code.parent</groupId>
 	    <artifactId>parent</artifactId>
-	    <version>0.0.1</version>
+	    <version>0.0.2</version>
   	</parent>
   
   	<groupId>de.gwasch.code.escframework</groupId>
 	<artifactId>escframework</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 
 	<name>escframework</name>
 	<description>A universal Java communication framework supporting event, state and component handling, incl. pattern-matching</description>

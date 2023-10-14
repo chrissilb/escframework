@@ -7,7 +7,7 @@ import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 import de.gwasch.code.escframework.events.patterns.Rule;
 
 /**
- * Common super type for rule factories.
+ * Common interface for rule factories.
  *  
  * @param <T> the annotation type of the concrete {@code RuleFactory}
  * 

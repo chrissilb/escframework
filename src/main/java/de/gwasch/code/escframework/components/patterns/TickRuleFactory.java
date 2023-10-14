@@ -10,10 +10,18 @@ import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 
 /**
- * Creates a {@link Rule} for the {@link PatternMatcher} indicated by {@link Tick}.
+ * Factory class that creates a {@link Tick} rule.
  */
 public class TickRuleFactory implements RuleFactory<Tick> {
 
+	/**
+	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link Tick}.
+	 * 
+	 * @param tick the annotation
+	 * @param thiz the service instance
+	 * @param method the annotated method
+	 * @return the created {@code Rule} instance
+	 */
 	public Rule createRule(Tick tick, Object thiz, Method method) {
 		
 		InvocationEvent triggerEvent;

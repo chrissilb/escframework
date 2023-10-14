@@ -11,10 +11,18 @@ import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 
 /**
- * Creates a {@link Rule} for the {@link PatternMatcher} indicated by {@link Less}.
+ * Factory class that creates a {@link Less} rule.
  */
 public class LessRuleFactory implements RuleFactory<Less> {
 
+	/**
+	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link Less}.
+	 * 
+	 * @param less the annotation
+	 * @param thiz the service instance
+	 * @param method the annotated method
+	 * @return the created {@code Rule} instance
+	 */
 	public Rule createRule(Less less, Object thiz, Method method) {
 
 		InvocationEvent actionEvent;

@@ -11,10 +11,18 @@ import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 
 /**
- * Creates a {@link Rule} for the {@link PatternMatcher} indicated by {@link More}.
+ * Factory class that creates a {@link More} rule.
  */
 public class MoreRuleFactory implements RuleFactory<More> {
 
+	/**
+	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link More}.
+	 * 
+	 * @param more the annotation
+	 * @param thiz the service instance
+	 * @param method the annotated method
+	 * @return the created {@code Rule} instance
+	 */
 	public Rule createRule(More more, Object thiz, Method method) {
 		
 		InvocationEvent actionEvent;

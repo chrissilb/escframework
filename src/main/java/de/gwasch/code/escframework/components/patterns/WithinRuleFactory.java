@@ -2,6 +2,7 @@ package de.gwasch.code.escframework.components.patterns;
 
 import java.lang.reflect.Method;
 
+import de.gwasch.code.escframework.components.annotations.Delay;
 import de.gwasch.code.escframework.components.annotations.Tick;
 import de.gwasch.code.escframework.components.annotations.Within;
 import de.gwasch.code.escframework.components.events.InvocationEvent;
@@ -14,10 +15,18 @@ import de.gwasch.code.escframework.states.functions.Function;
 import de.gwasch.code.escframework.states.states.FunctionState;
 
 /**
- * Creates a {@link Rule} for the {@link PatternMatcher} indicated by {@link Tick}.
+ * Factory class that creates a {@link Within} rule.
  */
 public class WithinRuleFactory implements RuleFactory<Within> {
 
+	/**
+	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link Within}.
+	 * 
+	 * @param within the annotation
+	 * @param thiz the service instance
+	 * @param method the annotated method
+	 * @return the created {@code Rule} instance
+	 */
 	public Rule createRule(Within within, Object thiz, Method method) {
 		
 		RuleBuilder rb = new RuleBuilder();

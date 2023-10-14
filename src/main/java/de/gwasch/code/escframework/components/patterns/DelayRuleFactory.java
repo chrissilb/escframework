@@ -10,10 +10,18 @@ import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 
 /**
- * Creates a {@link Rule} for the {@link PatternMatcher} indicated by {@link Delay}.
+ * Factory class that creates a {@link Delay} rule.
  */
 public class DelayRuleFactory implements RuleFactory<Delay> {
 
+	/**
+	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link Delay}.
+	 * 
+	 * @param delay the annotation
+	 * @param thiz the service instance
+	 * @param method the annotated method
+	 * @return the created {@code Rule} instance
+	 */
 	public Rule createRule(Delay delay, Object thiz, Method method) {
 		
 		RuleBuilder rb = new RuleBuilder();
