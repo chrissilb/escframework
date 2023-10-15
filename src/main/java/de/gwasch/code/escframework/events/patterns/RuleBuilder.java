@@ -43,8 +43,8 @@ public class RuleBuilder {
 		return this;
 	}
 	
-	public RuleBuilder triggerCountCompareCondition(CompareCondition triggerCountCompareCondition) {
-		rule.setTriggerCountCompareCondition(triggerCountCompareCondition);
+	public RuleBuilder rangeCondition(RangeCondition rangeCondition) {
+		rule.setRangeCondition(rangeCondition);
 		return this;
 	}
 	

@@ -15,8 +15,6 @@ public abstract class AbstractISState<T extends Enum<T>> extends CompositeState<
 
     protected StrivingState<T> rootState;
 
-
-
     protected AbstractISState(Class<T> stateType, String name, State<T> strivedstate) {
     	super(stateType, name);
     	

@@ -10,7 +10,7 @@ public abstract class AbstractComparableAggregation<T extends Comparable<T>> imp
     private ReferenceCounter<T> referenceCounter = null;
 
 
-    public AbstractComparableAggregation(AggregateFunction function)
+    protected AbstractComparableAggregation(AggregateFunction function)
     {
         aggregateFunction = function;
 

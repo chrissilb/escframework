@@ -34,7 +34,7 @@ import de.gwasch.code.escframework.utils.logging.Logger;
  * <p>
  * {@code Scheduler}s must be activated once all successors are defined.
  * 
- * @param <E> The event type considered by the {@code Scheduler}.
+ * @param <E> the event type considered by the {@code Scheduler}
  */
 public class Scheduler<E extends Event> extends Processor<E> {
 

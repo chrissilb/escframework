@@ -48,7 +48,7 @@ public class GeneralRule extends Rule {
 		if (getTriggerInterval() > 0 || getMaxTriggerCount() >= 0) {
 			range = new Range(getMaxTriggerCount() + 1, getTriggerInterval());
 			
-			switch(getTriggerCountCompareCondition()) {
+			switch(getRangeCondition()) {
 				case EQ_AFTER:
 				case NE_AFTER:
 				case LE_AFTER:
@@ -96,7 +96,7 @@ public class GeneralRule extends Rule {
 		assert getRuleMode() == RuleMode.ACTIVE;
 
 		if (tec.getRange() != null) {
-			switch(getTriggerCountCompareCondition()) {
+			switch(getRangeCondition()) {
 				case EQ_AFTER:
 				case NE_AFTER:
 				case LE_AFTER:
@@ -132,7 +132,7 @@ public class GeneralRule extends Rule {
 		setTriggerIntervalEvent(null);
 
 		if (tec.getRange() != null) {
-			switch(getTriggerCountCompareCondition()) {
+			switch(getRangeCondition()) {
 			case EQ_AFTER:
 				if (tec.getRange().getSize() == getMaxTriggerCount()) {
 					doAction();

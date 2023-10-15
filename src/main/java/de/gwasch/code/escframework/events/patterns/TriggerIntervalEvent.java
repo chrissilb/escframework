@@ -6,10 +6,33 @@ import de.gwasch.code.escframework.events.events.AbstractEvent;
 import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.utils.TimeUtil;
 
+/**
+ * A {@code TriggerIntervalEvent} is used by a {@link Rule} to control events of a {@link Range}.
+ * The {@code Rule} of the {@code TriggerIntervalEvent} gets feedback once it is processed.
+ * This happens via {@link Rule#onTriggerIntervalEvent()}.
+ * <p>
+ * In a {@code Rule} class an {@code TriggerIntervalEvent} can be sent like this, for example:
+ * <pre>
+ *     setTriggerIntervalEvent(new TriggerIntervalEvent(this, oldestEvent));
+ *     getPatternMatcher().getProcessor().process(getTriggerIntervalEvent());
+ * </pre>
+ * It is good practice to store the event via {@link Rule#setTriggerIntervalEvent(TriggerIntervalEvent)}
+ * to be able to cancel or suspend it if needed. 
+ */
 public class TriggerIntervalEvent extends AbstractEvent {
 	
 	private Rule rule;
 	
+	/**
+	 * Constructs the {@code TriggerIntervalEvent} based a {@link Rule}. It sets its {@code pushTime}.
+	 * The {@code pushTime} is set to {@code offset} + {@code interval}. The {@code offset} is the
+	 * {@code pushTime} of the {@code offsetEvent} if not {@code null} or the current time.
+	 * The {@code interval} is {@link Rule#getTriggerInterval()} adjust by a random number and
+	 * {@link Rule#getMaxTriggerDeviationFactor()}.
+	 *  
+	 * @param rule the {@code Rule}
+	 * @param offsetEvent is used as base push time. If this is {@code null} the current time is the offset time. 
+	 */
 	public TriggerIntervalEvent(Rule rule, Event offsetEvent) {
 		this.rule = rule;
 
@@ -28,9 +51,6 @@ public class TriggerIntervalEvent extends AbstractEvent {
 		else {
 			TimeUtil.setPushTime(this, interval);
 		}
-		
-		
-		
 	}
 	
 	public TriggerIntervalEvent(Rule rule) {

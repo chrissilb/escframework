@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import de.gwasch.code.escframework.components.annotations.Less;
 import de.gwasch.code.escframework.components.events.InvocationEvent;
 import de.gwasch.code.escframework.components.utils.InstanceAllocator;
-import de.gwasch.code.escframework.events.patterns.CompareCondition;
+import de.gwasch.code.escframework.events.patterns.RangeCondition;
 import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.patterns.RuleBuilder;
@@ -31,7 +31,7 @@ public class LessRuleFactory implements RuleFactory<Less> {
 			.name(Less.class.getSimpleName().toLowerCase())
 			.triggerInterval(less.interval())
 			.maxTriggerCount(less.invocations() - 1)
-			.triggerCountCompareCondition(CompareCondition.LE_AFTER)
+			.rangeCondition(RangeCondition.LE_AFTER)
 			.triggerPatternEvent(InstanceAllocator.createInvocationEvent(thiz, method))
 			.actionEvent(actionEvent = InstanceAllocator.createInvocationEvent(thiz, less.methodName()))
 			.actionFinishEvent(InstanceAllocator.createReturnEvent(thiz, actionEvent))

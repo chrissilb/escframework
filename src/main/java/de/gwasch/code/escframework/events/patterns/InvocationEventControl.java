@@ -4,7 +4,7 @@ import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.states.states.SimpleState;
 import de.gwasch.code.escframework.states.states.State;
 
-public abstract class InvocationEventControl extends EventControl {
+public abstract class InvocationEventControl implements EventControl {
 
 	private Rule rule;
 	private State<Event> patternEvent;

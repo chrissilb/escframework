@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import de.gwasch.code.escframework.components.annotations.Asterisk;
 
 /**
- * A {@link MetaMethod} which is annotated by {@link Asterisk}
+ * A {@link MetaMethod} which is annotated by {@link Asterisk}.
  * 
  * @see InstanceAllocator
  */

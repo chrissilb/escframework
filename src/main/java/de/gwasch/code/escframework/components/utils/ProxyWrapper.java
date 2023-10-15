@@ -4,6 +4,20 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 
+import de.gwasch.code.escframework.components.events.InvocationEvent;
+import de.gwasch.code.escframework.events.processors.Dispatcher;
+
+/**
+ * The class {@code ProxyWrapper} is mainly needed by framework classes to manage components by a hash table.
+ * This is needed because components are realized as dynamic proxies which can have application-specific implementations
+ * of {@link Object#equals(Object)} and {@link Object#hashCode()}. {@code ProxyWrapper} implements those methods
+ * comparing instances and providing hash codes based on the proxy instance identity. 
+ * <p>
+ * {@code ProxyWrapper}s are used as sources for {@link InvocationEvent}s because {@link Dispatcher} uses a {@code HashMap}
+ * to filter by event sources.
+ * <p>
+ * Furthermore, {@code ProxyWrapper} provides information about the methods implemented by a dynamic proxy class.
+ */
 public class ProxyWrapper {
 	
 	private Proxy proxy;

@@ -7,7 +7,7 @@ import java.util.ListIterator;
 import de.gwasch.code.escframework.events.events.Event;
 
 /**
- * A {@code Range} collects events with a certain maximum age.
+ * A {@code Range} collects events up to a certain number and with a certain maximum age.
  * 
  * @see TriggerEventControl
  * @see PatternMatcher

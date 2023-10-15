@@ -6,6 +6,9 @@ package de.gwasch.code.escframework.events.events;
  */
 public abstract class AbstractAction extends AbstractEvent implements Action {
 
+	protected AbstractAction() {
+	}
+	
 	public void cancel() {
 	}
 

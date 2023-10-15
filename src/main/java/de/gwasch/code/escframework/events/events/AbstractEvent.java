@@ -21,7 +21,7 @@ public abstract class AbstractEvent implements Event {
 	private Stack<Callback<?>> callbacks;
 	private long suspendTime;
 	
-	public AbstractEvent() {
+	protected AbstractEvent() {
 		id = -1;
 		pushTime = 0;
 		popTime = 0;

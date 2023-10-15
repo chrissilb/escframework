@@ -20,7 +20,7 @@ import de.gwasch.code.escframework.events.processors.Processor;
  */
 public class PatternMatcher {
 
-	class ActionFinishEventControl extends EventControl {
+	class ActionFinishEventControl implements EventControl {
 
 		public String getName() {
 			return "actionFinish";

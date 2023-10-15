@@ -4,7 +4,7 @@ public abstract class AbstractPushAction extends AbstractAction implements PushA
 
 	private Action action;
 	
-	public AbstractPushAction(Action action) {
+	protected AbstractPushAction(Action action) {
 		this.action = action;
 	}
 	

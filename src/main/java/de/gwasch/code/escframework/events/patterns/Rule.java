@@ -21,7 +21,7 @@ public abstract class Rule {
 	private int triggerInterval;				// Zeitraum in dem Trigger-Events in einer Range gesammelt werden
 	private double maxTriggerDeviationFactor;
 	private int maxTriggerCount;				// Größe der Range
-	private CompareCondition triggerCountCompareCondition;
+	private RangeCondition rangeCondition;
 	private boolean implicitFirstTrigger;
 	
 	private State<Event> actionEvent;						
@@ -47,7 +47,7 @@ public abstract class Rule {
 		triggerInterval = 0;
 		maxTriggerDeviationFactor = 0.0;
 		maxTriggerCount = -1;
-		triggerCountCompareCondition = CompareCondition.ONCE_EQ;
+		rangeCondition = RangeCondition.ONCE_EQ;
 		implicitFirstTrigger = false;
 
 		actionEvent = new SimpleState<>(Event.class, "actionEvent");
@@ -139,12 +139,12 @@ public abstract class Rule {
 		this.maxTriggerCount = maxTriggerCount;
 	}
 
-	public CompareCondition getTriggerCountCompareCondition() {
-		return triggerCountCompareCondition;
+	public RangeCondition getRangeCondition() {
+		return rangeCondition;
 	}
 	
-	public void setTriggerCountCompareCondition(CompareCondition triggerCountCompareCondition) {
-		this.triggerCountCompareCondition = triggerCountCompareCondition;
+	public void setRangeCondition(RangeCondition rangeCondition) {
+		this.rangeCondition = rangeCondition;
 	}
 	
 	public boolean implicitFirstTrigger() {

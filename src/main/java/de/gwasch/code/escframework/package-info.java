@@ -1,6 +1,6 @@
 
 /**
- * The escframework is universal communication framework supporting event, state and component handling, incl. pattern-matching. 
+ * The escframework is a universal communication framework supporting event, state and component handling, incl. pattern-matching. 
  * <p>
  * Thus it is a composition of:
  * <ul>
