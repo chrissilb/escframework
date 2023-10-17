@@ -24,10 +24,9 @@ See Demonstrators:
 
 For further information see https://gwasch.de/escframework.php - "Folien" (only available in German so far)
 
-## Next Steps
-* Provide DemoLibrary
-* Provide DemoProductionSystem
-* Provide DemoThreadPool
+## Next Development Steps
+* Provide DemoStates
+* Provide DemoComponentManager
 * Complete Javadoc
 * Provide example for UndoAction
 * Complete standard actions (Loop, Sequence, Parallel) plus example
