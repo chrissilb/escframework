@@ -2,7 +2,7 @@ package de.gwasch.code.escframework.events.patterns;
 
 import de.gwasch.code.escframework.events.events.Event;
 
-public class TriggerEventControl extends InvocationEventControl {
+public class TriggerEventControl extends PatternEventControl {
 	
 	private int lastEventId;
 	private EventHistory eventHistory;			// todo, evtl entfernen, indem man bei activate und deactivate nur neue events akzeptiert

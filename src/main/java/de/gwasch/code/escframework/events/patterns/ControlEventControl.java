@@ -2,10 +2,10 @@ package de.gwasch.code.escframework.events.patterns;
 
 import de.gwasch.code.escframework.events.events.Event;
 
-public class ControlEventControl extends InvocationEventControl {
+public class ControlEventControl extends PatternEventControl {
 
-	public ControlEventControl(Rule rule, String eventName, boolean consumeEvents, RuleEventListener handler) {
-		super(rule, eventName, consumeEvents, handler);
+	public ControlEventControl(Rule rule, String typeName, boolean consumeEvents, RuleEventListener handler) {
+		super(rule, typeName, consumeEvents, handler);
 
 	}
 

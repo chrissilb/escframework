@@ -46,18 +46,21 @@ public class Executor<A extends Action> extends Processor<A> {
 
 	private A currentAction;
 	
+	/**
+	 * Constructs an {@code Executor}.
+	 * @param name the name of this {@code Processor}
+	 */
 	public Executor(String name) {
 		super(name);
 		currentAction = null;
 		
-		installHandler(null, new ProcessHandler());
-//		setHandler(ActivateEvent.class, new ActivateHandler());
-//		setHandler(DeactivateEvent.class, new DeactivateHandler());
-//		setHandler(SuspendEvent.class, new SuspendHandler());
-//		setHandler(ResumeEvent.class, new ResumeHandler());
-		installHandler(CancelEvent.class, new CancelHandler());
+		installListener(null, new ProcessHandler());
+		installListener(CancelEvent.class, new CancelHandler());
 	}
 	
+	/**
+	 * Constructs an {@code Executor}. The name of this {@code Processor} is an empty {@code String}.
+	 */
 	public Executor() {
 		this("");
 	}

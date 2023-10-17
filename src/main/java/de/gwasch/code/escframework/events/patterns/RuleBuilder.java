@@ -49,17 +49,17 @@ public class RuleBuilder {
 	}
 	
 	public RuleBuilder triggerPatternEvent(Event triggerPatternEvent) {
-		rule.getInvocationEventControl("trigger").setPatternEvent(triggerPatternEvent);
+		rule.getPatternEventControl("trigger").setPatternEvent(triggerPatternEvent);
 		return this;
 	}
 	
 	public RuleBuilder consumeTriggerEvents(boolean consumeTriggerEvents) {
-		rule.getInvocationEventControl("trigger").setConsumeEvents(consumeTriggerEvents);
+		rule.getPatternEventControl("trigger").setConsumeEvents(consumeTriggerEvents);
 		return this;
 	}
 	
 	public RuleBuilder eventHistory(EventHistory eventHistory) {
-		((TriggerEventControl)rule.getInvocationEventControl("trigger")).setEventHistory(eventHistory);
+		((TriggerEventControl)rule.getPatternEventControl("trigger")).setEventHistory(eventHistory);
 		return this;
 	}
 	
@@ -104,61 +104,61 @@ public class RuleBuilder {
 	}
 	
 	public RuleBuilder activatePatternEventState(State<Event> activatePatternEventState) {
-		rule.getInvocationEventControl("activate").setPatternEventState(activatePatternEventState);
+		rule.getPatternEventControl("activate").setPatternEventState(activatePatternEventState);
 		return this;
 	}
 	
 	public RuleBuilder activatePatternEvent(Event activatePatternEvent) {
-		rule.getInvocationEventControl("activate").setPatternEvent(activatePatternEvent);
+		rule.getPatternEventControl("activate").setPatternEvent(activatePatternEvent);
 		return this;
 	}
 	
 	public RuleBuilder consumeActivateEvents(boolean consumeActivateEvents) {
-		rule.getInvocationEventControl("activate").setConsumeEvents(consumeActivateEvents);
+		rule.getPatternEventControl("activate").setConsumeEvents(consumeActivateEvents);
 		return this;
 	}
 	
 	public RuleBuilder deactivatePatternEventState(State<Event> deactivatePatternEventState) {
-		rule.getInvocationEventControl("deactivate").setPatternEventState(deactivatePatternEventState);
+		rule.getPatternEventControl("deactivate").setPatternEventState(deactivatePatternEventState);
 		return this;
 	}
 	
 	public RuleBuilder deactivatePatternEvent(Event deactivatePatternEvent) {
-		rule.getInvocationEventControl("deactivate").setPatternEvent(deactivatePatternEvent);
+		rule.getPatternEventControl("deactivate").setPatternEvent(deactivatePatternEvent);
 		return this;
 	}
 	
 	public RuleBuilder consumeDeactivateEvents(boolean consumeDeactivateEvents) {
-		rule.getInvocationEventControl("deactivate").setConsumeEvents(consumeDeactivateEvents);
+		rule.getPatternEventControl("deactivate").setConsumeEvents(consumeDeactivateEvents);
 		return this;
 	}
 	public RuleBuilder suspendPatternEventState(State<Event> suspendPatternEventState) {
-		rule.getInvocationEventControl("suspend").setPatternEventState(suspendPatternEventState);
+		rule.getPatternEventControl("suspend").setPatternEventState(suspendPatternEventState);
 		return this;
 	}
 	
 	public RuleBuilder suspendPatternEvent(Event suspendPatternEvent) {
-		rule.getInvocationEventControl("suspend").setPatternEvent(suspendPatternEvent);
+		rule.getPatternEventControl("suspend").setPatternEvent(suspendPatternEvent);
 		return this;
 	}
 	
 	public RuleBuilder consumeSuspendEvents(boolean consumeSuspendEvents) {
-		rule.getInvocationEventControl("suspend").setConsumeEvents(consumeSuspendEvents);
+		rule.getPatternEventControl("suspend").setConsumeEvents(consumeSuspendEvents);
 		return this;
 	}
 	
 	public RuleBuilder resumePatternEventState(State<Event> resumePatternEventState) {
-		rule.getInvocationEventControl("resume").setPatternEventState(resumePatternEventState);
+		rule.getPatternEventControl("resume").setPatternEventState(resumePatternEventState);
 		return this;
 	}
 	
 	public RuleBuilder resumePatternEvent(Event resumePatternEvent) {
-		rule.getInvocationEventControl("resume").setPatternEvent(resumePatternEvent);
+		rule.getPatternEventControl("resume").setPatternEvent(resumePatternEvent);
 		return this;
 	}
 	
 	public RuleBuilder consumeResumeEvents(boolean consumeResumeEvents) {
-		rule.getInvocationEventControl("resume").setConsumeEvents(consumeResumeEvents);
+		rule.getPatternEventControl("resume").setConsumeEvents(consumeResumeEvents);
 		return this;
 	}
 }

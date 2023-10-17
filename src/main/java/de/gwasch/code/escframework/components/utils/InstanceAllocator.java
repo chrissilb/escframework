@@ -558,8 +558,8 @@ public class InstanceAllocator {
 			List<Rule> thizRules = createRules(guardedMethods, proxy);
 			
 			for (Rule rule : thizRules) {
-				if (rule.getInvocationEventControl("activate").getPatternEvent() == null) {
-					rule.getInvocationEventControl("activate").getRuleEventListener().onEvent();
+				if (rule.getPatternEventControl("activate").getPatternEvent() == null) {
+					rule.getPatternEventControl("activate").getRuleEventListener().onEvent();
 				}
 			}
 			

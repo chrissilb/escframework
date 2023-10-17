@@ -13,21 +13,41 @@ public class GeneralRule extends Rule {
 
 	private TriggerEventControl tec;
 	
+	/**
+	 * Constructs a {@code GeneralRule} and registers {@link EventControl}s. They become registered like this:
+	 * <pre>
+	 * addEventControl(new ControlEventControl(this, "deactivate", true, new RuleEventListener() {
+	 *     public void onEvent() { onDeactivateEvent(); }
+	 *     public boolean accept(RuleMode mode) { return mode != RuleMode.INACTIVE; }}));
+	 * addEventControl(new ControlEventControl(this, "suspend", true, new RuleEventListener() {
+	 *     public void onEvent() { onSuspendEvent(); }
+	 *     public boolean accept(RuleMode mode) { return mode != RuleMode.INACTIVE &amp;&amp; mode != RuleMode.SUSPENDED; }}));
+	 * addEventControl(tec = new TriggerEventControl(this, "trigger", false, new RuleEventListener() {
+	 *     public void onEvent() { onTriggerEvent(); }
+	 *     public boolean accept(RuleMode mode) { return mode == RuleMode.ACTIVE; }}));
+	 * addEventControl(new ControlEventControl(this, "activate", true, new RuleEventListener() {
+	 *     public void onEvent() { onActivateEvent(); }
+	 *     public boolean accept(RuleMode mode) { return mode == RuleMode.INACTIVE; }}));
+	 * addEventControl(new ControlEventControl(this, "resume", true, new RuleEventListener() {
+	 *     public void onEvent() { onResumeEvent(); }
+	 *     public boolean accept(RuleMode mode) { return mode == RuleMode.SUSPENDED; }}));
+	 * </pre>
+	 */
 	public GeneralRule() {
 		
-		addEventControl(new ControlEventControl(this, "deactivate", true, new RuleEventListener() { 
+		addPatternEventControl(new ControlEventControl(this, "deactivate", true, new RuleEventListener() { 
 			public void onEvent() { onDeactivateEvent(); } 
 			public boolean accept(RuleMode mode) { return mode != RuleMode.INACTIVE; }}));
-		addEventControl(new ControlEventControl(this, "suspend", true, new RuleEventListener() { 
+		addPatternEventControl(new ControlEventControl(this, "suspend", true, new RuleEventListener() { 
 			public void onEvent() { onSuspendEvent(); }
 			public boolean accept(RuleMode mode) { return mode != RuleMode.INACTIVE && mode != RuleMode.SUSPENDED; }}));
-		addEventControl(tec = new TriggerEventControl(this, "trigger", false, new RuleEventListener() { 
+		addPatternEventControl(tec = new TriggerEventControl(this, "trigger", false, new RuleEventListener() { 
 			public void onEvent() { onTriggerEvent(); }
 			public boolean accept(RuleMode mode) { return mode == RuleMode.ACTIVE; }}));		
-		addEventControl(new ControlEventControl(this, "activate", true, new RuleEventListener() { 
+		addPatternEventControl(new ControlEventControl(this, "activate", true, new RuleEventListener() { 
 			public void onEvent() { onActivateEvent(); }
 			public boolean accept(RuleMode mode) { return mode == RuleMode.INACTIVE; }}));
-		addEventControl(new ControlEventControl(this, "resume", true, new RuleEventListener() { 
+		addPatternEventControl(new ControlEventControl(this, "resume", true, new RuleEventListener() { 
 			public void onEvent() { onResumeEvent(); }
 			public boolean accept(RuleMode mode) { return mode == RuleMode.SUSPENDED; }}));
 	}
@@ -76,7 +96,7 @@ public class GeneralRule extends Rule {
 			registerTriggerEvent = true;
 		}
 		
-		if (getInvocationEventControl("trigger").getPatternEvent() != null) {
+		if (getPatternEventControl("trigger").getPatternEvent() != null) {
 			tec.setRange(range);
 			tec.setRegisterTriggerEvent(registerTriggerEvent);
 		}
@@ -228,7 +248,7 @@ public class GeneralRule extends Rule {
 		assert getTriggerIntervalEvent() == null;
 		assert getActionIntervalEvent() == null;
 		
-		if (getInvocationEventControl("trigger").getPatternEvent() == getActionEvent()) {
+		if (getPatternEventControl("trigger").getPatternEvent() == getActionEvent()) {
 			onTriggerEvent();
 		}
 	}

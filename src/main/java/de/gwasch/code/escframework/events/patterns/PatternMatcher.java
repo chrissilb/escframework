@@ -13,25 +13,47 @@ import de.gwasch.code.escframework.events.processors.Dispatcher;
 import de.gwasch.code.escframework.events.processors.Processor;
 
 //todo, generieren von abstrakten events anhand von patterns...
+
 /**
- * A {@code PatternMatcher} registers for events at a {@link Dispatcher}. It is parameterized by
- * a set of rules. Every {@link Rule} interprets incoming events and pushes new events into the
- * processor network according to its algorithm.
+ * A {@code PatternMatcher} registers for events at a {@link Dispatcher}. It is
+ * parameterized by a set of rules. Every {@link Rule} interprets incoming
+ * events and pushes new events into the processor network according to its
+ * algorithm.
+ * <p>
+ * Incoming events are trigger events and control events. Trigger events might
+ * be buffered in a {@link Range}. Its evaluation leads to outgoing events,
+ * called action events. Control events are meant to influence the
+ * {@link RuleMode} of a{@code Rule}.
+ * <p>
+ * Incoming events can be distributed to several {@code Rules}. A
+ * {@code PatternMatcher} distributes incoming events in the order of a sequence
+ * of {@link EventControlType}s. The default order is:
+ * <ol>
+ * <li>deactivate</li>
+ * <li>suspend</li>
+ * <li>trigger</li>
+ * <li>actionFinish</li>
+ * <li>activate</li>
+ * <li>resume</li>
+ * </ol>
+ * A {@code Rule} registers corresponding {@link EventControl}s as shown in
+ * {@link GeneralRule#GeneralRule()}.
+ * 
  */
 public class PatternMatcher {
 
 	class ActionFinishEventControl implements EventControl {
 
-		public String getName() {
+		public String getTypeName() {
 			return "actionFinish";
 		}
-		
+
 		public boolean onEvent(Event event) {
-			
+
 			if (actionFinishEventRulesMap.containsKey(event)) {
-				
+
 				Set<Rule> rules = actionFinishEventRulesMap.get(event);
-				
+
 				for (Rule rule : rules) {
 					assert rule.getRuleMode() == RuleMode.PROCESSING_ACTION;
 					rule.onActionFinishEvent();
@@ -44,51 +66,42 @@ public class PatternMatcher {
 	class EventHandler extends EventAdapter<Event> {
 
 		public boolean onProcess(Event event) {
-						
+
 			try {
-//				if (event instanceof InvocationEvent) {
-//					InvocationEvent ie = (InvocationEvent)event;
-//					if (ie.getMethod().getName().equals("doCountdown")) {
-//						System.out.println("hier");
-//					}
-//				}
-				
+
 				boolean consume = false;
-				
+
 				if (event instanceof TriggerIntervalEvent) {
 					consume = true;
-					TriggerIntervalEvent triggerIntervalEvent = (TriggerIntervalEvent)event;
+					TriggerIntervalEvent triggerIntervalEvent = (TriggerIntervalEvent) event;
 					Rule rule = triggerIntervalEvent.getRule();
 					rule.setLastEvent(triggerIntervalEvent);
 					rule.onTriggerIntervalEvent();
-				}
-				else if (event instanceof ActionIntervalEvent) {				
+				} else if (event instanceof ActionIntervalEvent) {
 					consume = true;
-					ActionIntervalEvent actionIntervalEvent = (ActionIntervalEvent)event;
+					ActionIntervalEvent actionIntervalEvent = (ActionIntervalEvent) event;
 					Rule rule = actionIntervalEvent.getRule();
 					rule.setLastEvent(actionIntervalEvent);
 					rule.onActionIntervalEvent();
-				}
-				else  {
+				} else {
 					int controlEventIndex;
-					
-					for (controlEventIndex = 0; controlEventIndex < controlEventTypes.size(); controlEventIndex++) {
-						EventControlType cet = controlEventTypes.get(controlEventIndex);
+
+					for (controlEventIndex = 0; controlEventIndex < eventControlTypes.size(); controlEventIndex++) {
+						EventControlType cet = eventControlTypes.get(controlEventIndex);
 						for (EventControl ce : cet.getEventControls()) {
 							consume |= ce.onEvent(event);
 						}
 					}
 				}
-				
+
 				return !consume;
-			}
-			catch(Exception e) {
+			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		}
 	}
-	
-	// Current restrictions: 
+
+	// Current restrictions:
 	// - One rule references 0 to 1 ranges
 	// - One range references 1 rule
 	// - Once event can be considered by several ranges
@@ -96,13 +109,11 @@ public class PatternMatcher {
 	private Processor<Event> processor;
 	private EventHandler eventHandler;
 
-	
 	private List<Rule> rules;
-	private List<EventControlType> controlEventTypes;
+	private List<EventControlType> eventControlTypes;
 
 	private Map<Event, Set<Rule>> actionFinishEventRulesMap;
-		
-	
+
 	public PatternMatcher(Dispatcher<Event> dispatcher, Processor<Event> processor) {
 		this.dispatcher = dispatcher;
 		this.processor = processor;
@@ -113,154 +124,169 @@ public class PatternMatcher {
 
 		EventControlType actionFinishEventControlType = new EventControlType("actionFinish");
 		actionFinishEventControlType.addEventControl(new ActionFinishEventControl());
-		
-		controlEventTypes = new ArrayList<>();
-		addControlEventType(new EventControlType("deactivate"));
-		addControlEventType(new EventControlType("suspend"));
-		addControlEventType(new EventControlType("trigger"));
-		addControlEventType(actionFinishEventControlType);
-		addControlEventType(new EventControlType("activate"));
-		addControlEventType(new EventControlType("resume"));	
+
+		eventControlTypes = new ArrayList<>();
+		addEventControlType(new EventControlType("deactivate"));
+		addEventControlType(new EventControlType("suspend"));
+		addEventControlType(new EventControlType("trigger"));
+		addEventControlType(actionFinishEventControlType);
+		addEventControlType(new EventControlType("activate"));
+		addEventControlType(new EventControlType("resume"));
 	}
-	
+
+	public Dispatcher<Event> getDispatcher() {
+		return dispatcher;
+	}
+
 	public Processor<Event> getProcessor() {
 		return processor;
 	}
-	
+
 	public void addRule(Rule rule) {
 		assert rule != null;
-		
+
 		if (rules.size() == 0) {
 			dispatcher.register(Event.class, eventHandler);
 		}
-		
+
 		rules.add(rule);
 		
 		for (EventControl ce : rule.getEventControls()) {
-			getControlEventType(ce.getName()).addEventControl(ce);
+			getEventControlType(ce.getTypeName()).addEventControl(ce);
 		}
-		
-		rule.setPatternMatcher(this);
+
+		rule.setPatternMatcher(this);		
 	}
-	
+
 	public void removeRule(Rule rule) {
-		
+
 		if (!rules.contains(rule)) {
 			return;
 		}
-		
+
 		if (rule.getRuleMode() != RuleMode.INACTIVE) {
-			rule.getInvocationEventControl("deactivate").getRuleEventListener().onEvent();
+			rule.getPatternEventControl("deactivate").getRuleEventListener().onEvent();
 		}
-		
+
 		if (rules.size() == 0) {
 			dispatcher.unregister(Event.class, eventHandler);
 		}
 
 		for (EventControl ce : rule.getEventControls()) {
-			getControlEventType(ce.getName()).removeEventControl(ce);
+			getEventControlType(ce.getTypeName()).removeEventControl(ce);
 		}
-		
+
 		rules.remove(rule);
 	}
-	
+
 	public void clearRules() {
-		
+
 		if (rules.size() == 0) {
 			return;
 		}
-		
+
 		for (Rule rule : rules) {
 			if (rule.getRuleMode() != RuleMode.INACTIVE) {
-				rule.getInvocationEventControl("deactivate").getRuleEventListener().onEvent();
+				rule.getPatternEventControl("deactivate").getRuleEventListener().onEvent();
 			}
 		}
-		
+
 		dispatcher.unregister(Event.class, eventHandler);
 	}
-	
+
 	public List<Rule> getRules() {
 		return rules;
 	}
-	
+
 	public Rule getRuleByName(String name) {
-		
+
 		for (Rule rule : rules) {
 			if (rule.getName() != null && rule.getName().equals(name)) {
 				return rule;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public List<Rule> getRulesByName(String name) {
-		
+
 		List<Rule> foundRules = new ArrayList<>();
 		for (Rule rule : rules) {
 			if (rule.getName() != null && rule.getName().equals(name)) {
 				foundRules.add(rule);
 			}
 		}
-		
+
 		return foundRules;
 	}
 
-	
 	public Rule getRuleByActivatePatternEvent(Event activatePatternEvent) {
-		
+
 		for (Rule rule : rules) {
-			if (rule.getInvocationEventControl("activate").getPatternEvent() != null 
-				&& activatePatternEvent.equals(rule.getInvocationEventControl("activate").getPatternEvent())) {
+			if (rule.getPatternEventControl("activate").getPatternEvent() != null
+					&& activatePatternEvent.equals(rule.getPatternEventControl("activate").getPatternEvent())) {
 				return rule;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public List<Rule> getRulesByActivatePatternEvent(Event activatePatternEvent) {
-		
+
 		List<Rule> foundRules = new ArrayList<>();
 		for (Rule rule : rules) {
-			if (rule.getInvocationEventControl("activate").getPatternEvent() != null 
-				&& activatePatternEvent.equals(rule.getInvocationEventControl("activate").getPatternEvent())) {
+			if (rule.getPatternEventControl("activate").getPatternEvent() != null
+					&& activatePatternEvent.equals(rule.getPatternEventControl("activate").getPatternEvent())) {
 				foundRules.add(rule);
 			}
 		}
-		
+
 		return foundRules;
 	}
 
-	public void addControlEventType(EventControlType controlEventType) {
-		controlEventTypes.add(controlEventType);
+	public void addEventControlType(EventControlType eventControlType) {
+		eventControlTypes.add(eventControlType);
 	}
-	
-	public EventControlType getControlEventType(String name) {
-		for (EventControlType cet : controlEventTypes) {
-			if (cet.getName().equals(name)) {
-				return cet;
+
+	public void addEventControlType(int index, EventControlType eventControlType) {
+		eventControlTypes.add(index, eventControlType);
+	}
+
+	public EventControlType getEventControlType(String name) {
+		for (EventControlType ect : eventControlTypes) {
+			if (ect.getName().equals(name)) {
+				return ect;
 			}
 		}
-		
+
 		return null;
 	}
-		
+
+	public void clearEventControlTyppes() {
+		eventControlTypes.clear();
+	}
+
+	public void removeEventControlType(EventControlType eventControlType) {
+		eventControlTypes.remove(eventControlType);
+	}
+
 	public Map<Event, Set<Rule>> getActionFinishEventRulesMap() {
 		return actionFinishEventRulesMap;
 	}
-	
+
 	public void registerActionFinishEvent(Rule rule) {
-		
+
 		Event event = rule.getActionFinishEvent();
-		
+
 		if (!actionFinishEventRulesMap.containsKey(event)) {
 			actionFinishEventRulesMap.put(event, new HashSet<>());
 		}
 		Set<Rule> rules = actionFinishEventRulesMap.get(event);
-		rules.add(rule);		
+		rules.add(rule);
 	}
-	
+
 	public void unregisterActionFinishEvent(Rule rule) {
 
 		Event event = rule.getActionFinishEvent();
@@ -269,10 +295,9 @@ public class PatternMatcher {
 		if (rules != null) {
 			if (rules.size() == 1) {
 				actionFinishEventRulesMap.remove(event);
-			}
-			else {
+			} else {
 				rules.remove(rule);
 			}
 		}
-	}	
+	}
 }

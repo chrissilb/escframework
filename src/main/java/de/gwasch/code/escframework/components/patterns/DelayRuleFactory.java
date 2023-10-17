@@ -27,7 +27,7 @@ public class DelayRuleFactory implements RuleFactory<Delay> {
 		RuleBuilder rb = new RuleBuilder();
 		rb.name(Delay.class.getSimpleName().toLowerCase())
 		  .triggerPatternEvent(InstanceAllocator.createInvocationEvent(thiz, method))
-		  .actionEventState(rb.toRule().getInvocationEventControl("trigger").getEventState())
+		  .actionEventState(rb.toRule().getPatternEventControl("trigger").getEventState())
 		  .actionInterval(delay.interval())
 		  .consumeTriggerEvents(true)
 		  .eventHistory(EventHistory.NEW);

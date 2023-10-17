@@ -4,7 +4,7 @@ import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.states.states.SimpleState;
 import de.gwasch.code.escframework.states.states.State;
 
-public abstract class InvocationEventControl implements EventControl {
+public abstract class PatternEventControl implements EventControl {
 
 	private Rule rule;
 	private State<Event> patternEvent;
@@ -12,11 +12,11 @@ public abstract class InvocationEventControl implements EventControl {
 	private SimpleState<Event> event;
 	private RuleEventListener handler;
 	
-	public InvocationEventControl(Rule rule, String eventName, boolean consumeEvents, RuleEventListener handler) {
+	protected PatternEventControl(Rule rule, String typeName, boolean consumeEvents, RuleEventListener handler) {
 		this.rule = rule;
-		patternEvent = new SimpleState<>(Event.class, eventName + "Pattern");
+		patternEvent = new SimpleState<>(Event.class, typeName + "Pattern");
 		this.consumeEvents = consumeEvents;
-		event = new SimpleState<>(Event.class, eventName);
+		event = new SimpleState<>(Event.class, typeName);
 		this.handler = handler;
 	}
 	
@@ -25,7 +25,7 @@ public abstract class InvocationEventControl implements EventControl {
 		return rule;
 	}
 	
-	public String getName() {
+	public String getTypeName() {
 		return getEventState().getName();
 	}
 	public State<Event> getPatternEventState() {

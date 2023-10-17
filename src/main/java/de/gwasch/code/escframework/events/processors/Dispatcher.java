@@ -285,8 +285,8 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 	private int nrActiveEvents;
 	
 	/**
-	 * Initializes a newly created {@code Dispatcher}.
-	 * @param name The name of this {@code Processor}
+	 * Constructs a {@code Dispatcher}.
+	 * @param name the name of this {@code Processor}
 	 */
 	public Dispatcher(String name) {
 		super(name);
@@ -303,15 +303,15 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 		nrActiveEvents = 0;
 		
 //		setHandler(null, new ProcessHandler());
-		installHandler(ActivateEvent.class, new ActivateHandler());
-		installHandler(DeactivateEvent.class, new DeactivateHandler());
-		installHandler(SuspendEvent.class, new SuspendHandler());
-		installHandler(ResumeEvent.class, new ResumeHandler());
-		installHandler(CancelEvent.class, new CancelHandler());
+		installListener(ActivateEvent.class, new ActivateHandler());
+		installListener(DeactivateEvent.class, new DeactivateHandler());
+		installListener(SuspendEvent.class, new SuspendHandler());
+		installListener(ResumeEvent.class, new ResumeHandler());
+		installListener(CancelEvent.class, new CancelHandler());
 	}
 	
 	/**
-	 * Initializes a newly created {@code Dispatcher}. The name of this {@code Processor} is an empty {@code String}.
+	 * Constructs a {@code Dispatcher}. The name of this {@code Processor} is an empty {@code String}.
 	 */
 	public Dispatcher() {
 		this("");
@@ -338,8 +338,8 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 		
 		innerMap.get(eventClass).add(listener);
 		
-		if (getHandler(null) == null) {
-			installHandler(null, new ProcessHandler());
+		if (getListener(null) == null) {
+			installListener(null, new ProcessHandler());
 		}
 	}
 	
