@@ -17,12 +17,16 @@ The escframework is an universal communication framework. It consists of Event, 
 * In project right click on "pom.xml" - Run As - Maven install
 
 ## Usage
-See https://gwasch.de/escframework.php - "Folien" (only available in German so far)
+See Demonstrators:
+* https://github.com/chrissilb/demothreadpool (Event framework)
+* https://github.com/chrissilb/demolibrary (Component framework)
+* https://github.com/chrissilb/demoproductionsystem (Component framework) 
 
-## Next Steps
-* Provide DemoLibrary
-* Provide DemoProductionSystem
-* Provide DemoThreadPool
+For further information see https://gwasch.de/escframework.php - "Folien" (only available in German so far)
+
+## Next Development Steps
+* Provide DemoStates (State framework)
+* Provide DemoComponentManager (State framework)
 * Complete Javadoc
 * Provide example for UndoAction
 * Complete standard actions (Loop, Sequence, Parallel) plus example
@@ -38,7 +42,7 @@ See https://gwasch.de/escframework.php - "Folien" (only available in German so f
 If YOU like to contribute to the project this is what you could do:
 * The escframework should be also provided in other programming languages, e.g. C++, C#, Python. This should not be done manually but AI-supported.
 * The escframework should support web development.
-* The slides on [gwasch.de](https://gwasch.de) should be translated from German into English. This should not be done manually but AI-supported into as much languages as possible.
+* The slides on [gwasch.de](https://gwasch.de) should be translated from German into English. This should not be done manually but AI-supported, finally into as many languages as possible.
 * Test the framework and report bugs.
 
 Thank you very much!
