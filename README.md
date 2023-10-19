@@ -27,8 +27,7 @@ See Demonstrators:
 For further information see https://gwasch.de/escframework.php - "Folien" (only available in German so far)
 
 ## Next Development Steps
-* Provide DemoStates (State framework)
-* Provide DemoComponentManager (State framework)
+* Improve State framework
 * Complete Javadoc
 * Provide example for UndoAction
 * Complete standard actions (Loop, Sequence, Parallel) plus example
