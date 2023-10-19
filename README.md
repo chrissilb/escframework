@@ -19,6 +19,8 @@ The escframework is an universal communication framework. It consists of Event, 
 ## Usage
 See Demonstrators:
 * https://github.com/chrissilb/demothreadpool (Event framework)
+* https://github.com/chrissilb/demostates (State framework)
+* https://github.com/chrissilb/democomponentmanager (State framework)
 * https://github.com/chrissilb/demolibrary (Component framework)
 * https://github.com/chrissilb/demoproductionsystem (Component framework) 
 
