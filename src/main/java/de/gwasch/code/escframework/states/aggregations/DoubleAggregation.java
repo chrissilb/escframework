@@ -3,35 +3,38 @@ package de.gwasch.code.escframework.states.aggregations;
 
 public class DoubleAggregation extends AbstractComparableAggregation<Double> {
 
-    private double sum = 0;            // NOTE: only used for Avg
-    private int count = 0;             // NOTE: only used for Avg
+    private double sum;            // NOTE: only used for Avg
+    private int count;             // NOTE: only used for Avg
 
     public DoubleAggregation(AggregateFunction function) {
     	super(function);
+    	
+    	sum = 0.0;
+    	count = 0;
     }
 
-    public void addChildState(Double addstate)
+    public void addChildValue(Double value)
     {
         if (aggregateFunction == AggregateFunction.Avg)
         {
-            sum += addstate;
+            sum += value;
             count++;
         }
         else {
-            super.addChildState(addstate);
+            super.addChildValue(value);
         }
     }
 
 
-    public void removeChildState(Double removestate)
+    public void removeChildValue(Double value)
     {
         if (aggregateFunction == AggregateFunction.Avg)
         {
-            sum -= removestate;
+            sum -= value;
             count--;
        }
         else {
-            super.removeChildState(removestate);
+            super.removeChildValue(value);
         }
     }
 

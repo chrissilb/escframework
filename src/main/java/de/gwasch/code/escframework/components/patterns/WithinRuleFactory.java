@@ -2,8 +2,6 @@ package de.gwasch.code.escframework.components.patterns;
 
 import java.lang.reflect.Method;
 
-import de.gwasch.code.escframework.components.annotations.Delay;
-import de.gwasch.code.escframework.components.annotations.Tick;
 import de.gwasch.code.escframework.components.annotations.Within;
 import de.gwasch.code.escframework.components.events.InvocationEvent;
 import de.gwasch.code.escframework.components.utils.InstanceAllocator;

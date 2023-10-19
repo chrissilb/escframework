@@ -33,8 +33,8 @@ public class MaskPool
             throw new MaskAlreadyDefinedException(type);
         }
         
-        StateMask<T, T> startMask = new StateMask<T, T>();
-        StateMask<T, T> stopMask = new StateMask<T, T>();
+        Mask<T, T> startMask = new Mask<T, T>();
+        Mask<T, T> stopMask = new Mask<T, T>();
 
         T[] stateValues = type.getEnumConstants();
         T firstState = stateValues[0];
@@ -53,12 +53,12 @@ public class MaskPool
         for (T s : stateValues) {
         	
             if (s.compareTo(integrativeState) < 0) {
-                startMask.setMaskState(s, beforeIntegrative);
-                stopMask.setMaskState(s, firstState);
+                startMask.setMaskedValue(s, beforeIntegrative);
+                stopMask.setMaskedValue(s, firstState);
             }
             else {
-                startMask.setMaskState(s, laststate);
-                stopMask.setMaskState(s, integrativeState);
+                startMask.setMaskedValue(s, laststate);
+                stopMask.setMaskedValue(s, integrativeState);
             }
         }
 

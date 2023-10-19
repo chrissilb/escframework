@@ -5,13 +5,13 @@ import de.gwasch.code.escframework.states.aggregations.ComparableAggregation;
 import de.gwasch.code.escframework.states.aggregations.SimpleAggregation;
 import de.gwasch.code.escframework.states.utils.MaskPool;
 import de.gwasch.code.escframework.states.utils.MaskSet;
-import de.gwasch.code.escframework.states.utils.StateMask;
+import de.gwasch.code.escframework.states.utils.Mask;
 
 
 public abstract class AbstractISState<T extends Enum<T>> extends CompositeState<T> {
  
-    private StateMask<T, T> startMask;
-    private StateMask<T, T> stopMask;
+    private Mask<T, T> startMask;
+    private Mask<T, T> stopMask;
 
     protected StrivingState<T> rootState;
 
@@ -73,29 +73,29 @@ public abstract class AbstractISState<T extends Enum<T>> extends CompositeState<
 
     
     private void addStartDependency(State<T> strivingstate, State<T> startdependency, 
-                                           StateMask<T,T> mask)
+                                           Mask<T,T> mask)
     {
         StrivingState<T> striving = (StrivingState<T>)strivingstate;
 
         if (striving.getStartRestriction() == null)
         {
-            if (mask != null) startdependency = new MaskedState<T, T>(getStateType(), startdependency, mask);
+            if (mask != null) startdependency = new MaskedState<T, T>(getStateType(), "start mask", startdependency, mask);
             striving.setStartRestriction(startdependency);
         }
         else
         {
-            MaskedState<T, T> masked = null;
+        	MaskedState<T, T> maskedState = null;
             AggregateState<T> aggregated = null;
             State<T> singlechild = null;
 
             if (mask != null) {
-                masked = (MaskedState<T, T>)striving.getStartRestriction();
+                maskedState = (MaskedState<T, T>)striving.getStartRestriction();
 
-                if (masked.getNativeState() instanceof AggregateState) {
-                	aggregated = (AggregateState<T>)masked.getNativeState();
+                if (maskedState.getParamState() instanceof AggregateState) {
+                	aggregated = (AggregateState<T>)maskedState.getParamState();
                 }
                 else {
-                    singlechild = masked.getNativeState();
+                    singlechild = maskedState.getParamState();
                 }
             }
             else {
@@ -120,9 +120,9 @@ public abstract class AbstractISState<T extends Enum<T>> extends CompositeState<
 
                 aggregated = new AggregateState<T>(getStateType(), "startdep " + strivingstate.getName(), aggregation);
                 
-                if (masked != null) {
-                    masked.setNativeState(aggregated);
-                    striving.setStartRestriction(masked);
+                if (maskedState != null) {
+                    maskedState.setParamState(aggregated);
+                    striving.setStartRestriction(maskedState);
                 }
                 else
                     striving.setStartRestriction(aggregated);
@@ -136,29 +136,29 @@ public abstract class AbstractISState<T extends Enum<T>> extends CompositeState<
 
 
     private void addStopDependency(State<T> strivingstate, State<T> stopdependency,
-                                   StateMask<T, T> mask)
+                                   Mask<T, T> mask)
     {
         StrivingState<T> striving = (StrivingState<T>)strivingstate;
 
         if (striving.getStopRestriction() == null)
         {
-            if (mask != null) stopdependency = new MaskedState<T, T>(getStateType(), stopdependency, mask);
+            if (mask != null) stopdependency = new MaskedState<T, T>(getStateType(), "stop mask", stopdependency, mask);
             striving.setStopRestriction(stopdependency);
         }
         else
         {
-            MaskedState<T, T> masked = null;
+        	MaskedState<T, T> maskedState = null;
             AggregateState<T> aggregated = null;
             State<T> singlechild = null;
 
             if (mask != null) {
-                masked = (MaskedState<T, T>)striving.getStopRestriction();
+                maskedState = (MaskedState<T, T>)striving.getStopRestriction();
 
-                if (masked.getNativeState() instanceof AggregateState) {
-                	aggregated = (AggregateState<T>)masked.getNativeState();
+                if (maskedState.getParamState() instanceof AggregateState) {
+                	aggregated = (AggregateState<T>)maskedState.getParamState();
                 }
                 else {
-                    singlechild = masked.getNativeState();
+                    singlechild = maskedState.getParamState();
                 }
                
             }
@@ -186,9 +186,9 @@ public abstract class AbstractISState<T extends Enum<T>> extends CompositeState<
 
                 aggregated = new AggregateState<T>(getStateType(), "stopdep " + strivingstate.getName(), aggregation);
 
-                if (masked != null) {
-                    masked.setNativeState(aggregated);
-                    striving.setStopRestriction(masked);
+                if (maskedState != null) {
+                    maskedState.setParamState(aggregated);
+                    striving.setStopRestriction(maskedState);
                 }
                 else {
                     striving.setStopRestriction(aggregated);

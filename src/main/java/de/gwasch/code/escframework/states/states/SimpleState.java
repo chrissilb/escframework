@@ -11,6 +11,12 @@ public class SimpleState<T> extends State<T> {
     	super(stateType, name);
     }
 
+    public SimpleState(Class<T> stateType, String name, T stateValue) {    
+    	super(stateType, name);
+    	
+    	setStateValue(stateValue);
+    }
+
     public void setValue(T value) {
         setStateValue(value);
     }

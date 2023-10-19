@@ -3,33 +3,36 @@ package de.gwasch.code.escframework.states.aggregations;
 
 public class IntegerAggregation extends AbstractComparableAggregation<Integer> {
 
-    private int sum = 0;              // NOTE: only used for Avg
-    private int count = 0;            // NOTE: only used for Avg
+    private int sum;              // NOTE: only used for Avg
+    private int count;            // NOTE: only used for Avg
    
     public IntegerAggregation(AggregateFunction function) {
     	super(function);
+    	
+    	sum = 0;
+    	count = 0;
     }
 
-    public void addChildState(int addstate)
+    public void addChildValue(int value)
     {
         if (aggregateFunction == AggregateFunction.Avg)
         {
-            sum += addstate; 
+            sum += value; 
             count++;
         }
         else 
-            super.addChildState(addstate);
+            super.addChildValue(value);
     }
 
 
-    public void removeChildState(int removestate)
+    public void removeChildValue(int value)
     {
         if (aggregateFunction == AggregateFunction.Avg) {
-            sum -= removestate; 
+            sum -= value; 
             count--;
         }
         else {
-            super.removeChildState(removestate);
+            super.removeChildValue(value);
         }
     }
 

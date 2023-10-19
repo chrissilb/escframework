@@ -34,11 +34,11 @@ public class BrakedState<T extends Enum<T>> extends State<T> {
     private State<T> realState;
     private State<T> strivedState;
 
-    public BrakedState(Class<T> stateType, State<T> realstate, State<T> strivedstate) {
-        super(stateType, "braked " + strivedstate.getName());
+    public BrakedState(Class<T> stateType, State<T> realState, State<T> strivedState) {
+        super(stateType, "braked " + strivedState.getName());
     
-        realState = realstate;
-        strivedState = strivedstate;
+        this.realState = realState;
+        this.strivedState = strivedState;
 
         TransitionHandler th = new TransitionHandler();
         realState.registerTransitionListener(th);

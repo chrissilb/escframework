@@ -2,20 +2,20 @@ package de.gwasch.code.escframework.states.utils;
 
 public class MaskSet<T>
 {
-    private StateMask<T, T> startMask;
-    private StateMask<T, T> stopMask;
+    private Mask<T, T> startMask;
+    private Mask<T, T> stopMask;
 
-    public MaskSet(StateMask<T, T> startmask, StateMask<T, T> stopmask)
+    public MaskSet(Mask<T, T> startmask, Mask<T, T> stopmask)
     {
         startMask = startmask;
         stopMask = stopmask;
     }
 
-    public StateMask<T, T> getStartMask() {
+    public Mask<T, T> getStartMask() {
         return startMask;
     }
 
-    public StateMask<T, T> getStopMask() {
+    public Mask<T, T> getStopMask() {
         return stopMask; 
     }
 }

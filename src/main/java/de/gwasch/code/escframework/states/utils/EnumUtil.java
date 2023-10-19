@@ -1,35 +1,33 @@
 package de.gwasch.code.escframework.states.utils;
 
+/**
+ * Utility class for enum types.
+ */
 public class EnumUtil {
 	
-    public static<T extends Enum<T>> T increment(T state) {
-    	
-    	Class<?> cls = state.getClass();
-    	return (T)cls.getEnumConstants()[state.ordinal() + 1];
-        
-    	// NOTE: bad code...
-//        IList<T> l = (IList<T>)Enum.GetValues(typeof(T));
-//        int i = l.IndexOf(state) + 1;
-//        state = (T)Enum.ToObject(typeof(T), l[i]);
-
-        //int i = System.Convert.ToInt32(state);
-        //i++;
-        //state = (T)Enum.ToObject(typeof(T), i);
+	/**
+	 * Increments an enum value by 1 according to its ordinal number.
+	 * 
+	 * @param <T> the enum type
+	 * @param value the current value
+	 * @return the incremented value
+	 */
+    @SuppressWarnings("unchecked")
+	public static<T extends Enum<T>> T increment(T value) {    	
+    	Class<?> cls = value.getClass();
+    	return (T)cls.getEnumConstants()[value.ordinal() + 1];
     }
 
-
-    public static<T extends Enum<T>> T decrement(T state) {
-    	
-    	Class<?> cls = state.getClass();
-    	return (T)cls.getEnumConstants()[state.ordinal() - 1];
-
-        // NOTE: bad code...
-//        IList<T> l = (IList<T>)Enum.GetValues(typeof(T));
-//        int i = l.IndexOf(state) - 1;
-//        state = (T)Enum.ToObject(typeof(T), l[i]);
-
-        //int i = System.Convert.ToInt32(state);
-        //i--;
-        //state = (T)Enum.ToObject(typeof(T), i);
+	/**
+	 * Decrements an enum value by 1 according to its ordinal number.
+	 * 
+	 * @param <T> the enum type
+	 * @param value the current value
+	 * @return the incremented value
+	 */
+    @SuppressWarnings("unchecked")
+	public static<T extends Enum<T>> T decrement(T value) {   	
+    	Class<?> cls = value.getClass();
+    	return (T)cls.getEnumConstants()[value.ordinal() - 1];
     }
 }
