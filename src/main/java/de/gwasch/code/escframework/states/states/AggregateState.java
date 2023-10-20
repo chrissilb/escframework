@@ -1,7 +1,7 @@
 package de.gwasch.code.escframework.states.states;
 
 import de.gwasch.code.escframework.events.listeners.EventAdapter;
-import de.gwasch.code.escframework.states.aggregations.SimpleAggregation;
+import de.gwasch.code.escframework.states.aggregations.Aggregation;
 import de.gwasch.code.escframework.states.events.TransitionEvent;
 
 
@@ -18,17 +18,17 @@ public class AggregateState<T> extends State<T> {
 		}
 	}	
 	
-    private SimpleAggregation<T> aggregation;
+    private Aggregation<T> aggregation;
     private TransitionHandler transitionHandler;
   
 
-    public AggregateState(Class<T> stateType, String name, SimpleAggregation<T> aggregaton) {
+    public AggregateState(Class<T> stateType, String name, Aggregation<T> aggregaton) {
     	super(stateType, name);
         this.aggregation = aggregaton;
         transitionHandler = new TransitionHandler();
     } 
 
-    public SimpleAggregation<T> getAggregation() {
+    public Aggregation<T> getAggregation() {
         return aggregation;
     }
 

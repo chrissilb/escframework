@@ -10,6 +10,7 @@ import de.gwasch.code.escframework.states.events.TransitionEvent;
 import de.gwasch.code.escframework.states.listeners.ActivityListener;
 import de.gwasch.code.escframework.states.transistionmodes.DirectTransitionMode;
 import de.gwasch.code.escframework.states.transistionmodes.TransitionMode;
+import de.gwasch.code.escframework.states.utils.TypeUtil;
 
 /**
  * {@code State} is the main class of all states. All states communicate via
@@ -57,28 +58,7 @@ public abstract class State<T> {
 
 		transitionMode = new DirectTransitionMode<T>();
 
-		if (stateType.isEnum()) {
-			stateValue = stateType.getEnumConstants()[0];
-		} else if (stateType.equals(Boolean.class)) {
-			stateValue = (T) Boolean.FALSE;
-		} else if (stateType.equals(Integer.class)) {
-			stateValue = (T) Integer.valueOf(0);
-		} else if (stateType.equals(Double.class)) {
-			stateValue = (T) Double.valueOf(0.0);
-		} else if (stateType.equals(Byte.class)) {
-			stateValue = (T) Byte.valueOf((byte) 0);
-		} else if (stateType.equals(Short.class)) {
-			stateValue = (T) Short.valueOf((short) 0);
-		} else if (stateType.equals(Long.class)) {
-			stateValue = (T) Long.valueOf(0L);
-		} else if (stateType.equals(Float.class)) {
-			stateValue = (T) Float.valueOf(0.0f);
-		} else if (stateType.equals(Character.class)) {
-			stateValue = (T) Character.valueOf('\0');
-		} else {
-			stateValue = null;
-		}
-
+		stateValue = TypeUtil.getDefaultValue(stateType);
 	}
 
 	public void registerTransitionListener(EventListener<TransitionEvent<T>> listener) {

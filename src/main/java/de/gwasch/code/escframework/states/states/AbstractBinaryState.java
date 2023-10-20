@@ -34,8 +34,8 @@ public abstract class AbstractBinaryState<T> extends State<T> {
 
 		updateValue(paramState1.getValue(), paramState2.getValue());
 		transitionHandler1 = new TransitionHandler1();
-		paramState1.registerTransitionListener(transitionHandler1);
 		transitionHandler2 = new TransitionHandler2();
+		paramState1.registerTransitionListener(transitionHandler1);
 		paramState2.registerTransitionListener(transitionHandler2);
 	}
 

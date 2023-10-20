@@ -9,7 +9,7 @@ import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.patterns.PatternMatcher;
 import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.patterns.RuleBuilder;
-import de.gwasch.code.escframework.states.functions.Function;
+import de.gwasch.code.escframework.states.states.Function;
 import de.gwasch.code.escframework.states.states.FunctionState;
 
 /**

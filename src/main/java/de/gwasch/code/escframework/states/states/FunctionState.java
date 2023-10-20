@@ -2,7 +2,6 @@ package de.gwasch.code.escframework.states.states;
 
 import de.gwasch.code.escframework.events.listeners.EventAdapter;
 import de.gwasch.code.escframework.states.events.TransitionEvent;
-import de.gwasch.code.escframework.states.functions.Function;
 
 /**
  * {@code FunctionState} is parameterized by a {@link Function} and parameter
@@ -10,8 +9,8 @@ import de.gwasch.code.escframework.states.functions.Function;
  * Every parameter change leads to an invocation of {@link Function#getValue()}.
  * Its return value is used to set the new state value.
  * <p>
- * It is assumed that a corresponding {@code Function} knows its parameters on
- * its own.
+ * It is assumed that a corresponding {@code Function} knows its state parameters on
+ * its own. Though, it does not need to register for their transitions.
  * 
  * @param <T> the type of the {@code State} value
  * 

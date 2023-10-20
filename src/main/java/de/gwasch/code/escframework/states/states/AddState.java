@@ -1,6 +1,7 @@
 package de.gwasch.code.escframework.states.states;
 
 import de.gwasch.code.escframework.states.exceptions.UnsupportedTypeException;
+import de.gwasch.code.escframework.states.utils.TypeUtil;
 
 public class AddState<T extends Number> extends AbstractBinaryState<T> {
 
@@ -12,17 +13,7 @@ public class AddState<T extends Number> extends AbstractBinaryState<T> {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void updateValue(T paramValue1, T paramValue2) {
-
-		if (getStateType().equals(Integer.class)) {
-			setStateValue((T) (Integer.valueOf(paramValue1.intValue() + paramValue2.intValue())));
-		} else if (getStateType().equals(Double.class)) {
-			setStateValue((T) (Double.valueOf(paramValue1.doubleValue() + paramValue2.doubleValue())));
-		} else if (getStateType().equals(Long.class)) {
-			setStateValue((T) (Long.valueOf(paramValue1.longValue() + paramValue2.longValue())));
-		} else /* if (getStateType().equals(Float.class)) */ {
-			setStateValue((T) (Float.valueOf(paramValue1.floatValue() + paramValue2.floatValue())));
-		}
+		setStateValue(TypeUtil.add(getStateType(), paramValue1, paramValue2));
 	}
 }

@@ -1,6 +1,11 @@
 package de.gwasch.code.escframework.states.aggregations;
 
-public interface Aggregation<T> {
+public abstract class Aggregation<T> {
 
-	T getValue();
+	protected Aggregation() {
+	}
+	
+    public abstract void addChildValue(T value);
+    public abstract void removeChildValue(T value);    
+	public abstract T getValue();
 }

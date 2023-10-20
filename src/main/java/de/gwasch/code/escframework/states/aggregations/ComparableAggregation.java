@@ -1,14 +1,26 @@
 package de.gwasch.code.escframework.states.aggregations;
 
-import de.gwasch.code.escframework.states.exceptions.InvalidAggregateFunctionException;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class ComparableAggregation<T extends Comparable<T>> extends AbstractComparableAggregation<T> {
+public abstract class ComparableAggregation<T extends Comparable<T>> extends Aggregation<T> {
  
-	public ComparableAggregation(AggregateFunction function) {
-		super(function);
-		
-        if (function != AggregateFunction.Min && function != AggregateFunction.Max)
-            throw new InvalidAggregateFunctionException(function);
+	private List<T> list;
+
+	protected ComparableAggregation() {
+		list = new ArrayList<T>();
     }
+	
+	protected List<T> getList() {
+		return list;
+	}
+	
+	public void addChildValue(T value) {
+		list.add(value);
+	}
+
+	public void removeChildValue(T value) {
+		list.remove(value);
+	}
 }

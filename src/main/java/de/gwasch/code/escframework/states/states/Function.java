@@ -1,6 +1,4 @@
-package de.gwasch.code.escframework.states.functions;
-
-import de.gwasch.code.escframework.states.states.FunctionState;
+package de.gwasch.code.escframework.states.states;
 
 /**
  * A {@code Function} can be injected to a {@link FunctionState}. It provides a {@code State} value according to its

@@ -1,12 +1,12 @@
 package de.gwasch.code.escframework.states.states;
 
-import de.gwasch.code.escframework.states.aggregations.SimpleAggregation;
+import de.gwasch.code.escframework.states.aggregations.Aggregation;
 
 public class SharedISState<T extends Enum<T>> extends AbstractISState<T> {
 
   
 
-    public SharedISState(Class<T> stateType, String name, SimpleAggregation<T> aggregation) {
+    public SharedISState(Class<T> stateType, String name, Aggregation<T> aggregation) {
         super(stateType, name, new AggregateState<T>(stateType, "shared strived " + name, aggregation));
     
     }
