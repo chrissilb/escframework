@@ -1,5 +1,8 @@
 package de.gwasch.code.escframework.events.events;
 
+/**
+ * {@code ResumeEvent} is a control event to resume suspended process events.
+ */
 public class ResumeEvent extends AbstractEvent {
 	
 	private Event patternEvent;

@@ -1,5 +1,8 @@
 package de.gwasch.code.escframework.events.events;
 
+/**
+ * {@code AbstractPushAction} is the default super class of a {@code PushAction}.
+ */
 public abstract class AbstractPushAction extends AbstractAction implements PushAction {
 
 	private Action action;

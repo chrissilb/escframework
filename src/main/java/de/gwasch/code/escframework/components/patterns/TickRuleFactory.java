@@ -15,6 +15,12 @@ import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 public class TickRuleFactory implements RuleFactory<Tick> {
 
 	/**
+	 * Constructs a {@code TickRuleFactory}.
+	 */
+	public TickRuleFactory() {	
+	}
+	
+	/**
 	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link Tick}.
 	 * 
 	 * @param tick the annotation

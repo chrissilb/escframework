@@ -16,6 +16,12 @@ import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 public class LessRuleFactory implements RuleFactory<Less> {
 
 	/**
+	 * Constructs a {@code LessRuleFactory}.
+	 */
+	public LessRuleFactory() {	
+	}
+	
+	/**
 	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link Less}.
 	 * 
 	 * @param less the annotation

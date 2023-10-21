@@ -7,10 +7,15 @@ import java.lang.annotation.Target;
 
 /**
  * Enables <a href="https://docs.oracle.com/javase/tutorial/java/annotations/repeating.html">
- * Repeating Annotation</a>of {@link PatternControlMethod}.
+ * Repeating Annotations</a> of {@link PatternControlMethod}.
  */
 @Retention(RetentionPolicy.RUNTIME) 
 @Target(ElementType.TYPE) 
 public @interface PatternControlMethodList {
+	
+	/**
+	 * Returns an array of single {@code PatternControlMethod} annotations.
+	 * @return array of single {@code PatternControlMethod} annotations
+	 */
 	PatternControlMethod[] value();
 }

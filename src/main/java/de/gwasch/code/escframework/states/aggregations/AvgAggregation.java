@@ -2,8 +2,16 @@ package de.gwasch.code.escframework.states.aggregations;
 
 import de.gwasch.code.escframework.states.utils.TypeUtil;
 
+/**
+ * {@code AvgAggregation} provides the arithmetic average of child values.
+ * <p>
+ * Supported Number types are Integer, Double, Long and Float. Not supported are Short
+ * and Byte because their arithmetic operations return int values.
+ * 
+ *  @param <T> the type of the child values and result value
+ */
 public class AvgAggregation<T extends Number & Comparable<T>> extends Aggregation<T> {
-	
+
 	private Class<T> stateType;
 	private T sum;
 	private int count;

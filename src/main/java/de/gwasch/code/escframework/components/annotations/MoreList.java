@@ -12,5 +12,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME) 
 @Target(ElementType.METHOD) 
 public @interface MoreList {
+	
+	/**
+	 * Returns an array of single {@code More} annotations.
+	 * @return array of single {@code More} annotations
+	 */
 	More[] value();
 }

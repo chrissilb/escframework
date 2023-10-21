@@ -18,6 +18,12 @@ import de.gwasch.code.escframework.states.states.FunctionState;
 public class WithinRuleFactory implements RuleFactory<Within> {
 
 	/**
+	 * Constructs a {@code WithinRuleFactory}.
+	 */
+	public WithinRuleFactory() {	
+	}
+	
+	/**
 	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link Within}.
 	 * 
 	 * @param within the annotation

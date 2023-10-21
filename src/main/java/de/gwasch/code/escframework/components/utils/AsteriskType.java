@@ -1,9 +1,11 @@
 package de.gwasch.code.escframework.components.utils;
 
+import de.gwasch.code.escframework.components.annotations.Asterisk;
+
 /**
  * {@code AsteriskType} defines in which way a asterisk method is applied.
  * 
- * @see AsteriskMethod
+ * @see Asterisk
  * @see Skeleton
  */
 public enum AsteriskType {

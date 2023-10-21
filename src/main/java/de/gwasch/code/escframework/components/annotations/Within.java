@@ -7,13 +7,30 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Invokes {@link #methodName()} if the annotated method is on the Stack for a specified time interval.
+ * Invokes {@link #methodName()} if the annotated method is on the Stack for a
+ * specified time interval.
+ * 
+ * see de.gwasch.code.escframework.events.patterns.Rule
  */
-@Retention(RetentionPolicy.RUNTIME) 
-@Target(ElementType.METHOD) 
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
 @Repeatable(WithinList.class)
 @Rule
 public @interface Within {
-	int interval(); 
-	String methodName(); 
+
+	/**
+	 * Returns the considered time interval.
+	 * 
+	 * @return the time interval in milliseconds
+	 */
+	int interval();
+
+	/**
+	 * Returns the name of the method which is invoked if the annotated method is
+	 * still on the Stack once the time interval elapsed. The referenced method must
+	 * have to following signature: {@code public void <<methodName>>()}.
+	 * 
+	 * @return the method name
+	 */
+	String methodName();
 }

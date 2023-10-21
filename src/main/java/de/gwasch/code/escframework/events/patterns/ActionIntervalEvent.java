@@ -63,6 +63,10 @@ public class ActionIntervalEvent extends AbstractEvent {
 		}
 	}
 	
+	/**
+	 * Returns the assigned {@code Rule}.
+	 * @return the assigned {@code Rule}
+	 */
 	public Rule getRule() {
 		return rule;
 	}

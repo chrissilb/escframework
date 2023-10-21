@@ -6,6 +6,9 @@ import java.math.RoundingMode;
 import de.gwasch.code.escframework.events.listeners.EventAdapter;
 import de.gwasch.code.escframework.states.events.TransitionEvent;
 
+/**
+ * {@code RoundState} rounds a double state "half up".
+ */
 public class RoundState extends State<Double> {
 	
 	class NumberTransitionHandler extends EventAdapter<TransitionEvent<Double>> {

@@ -15,6 +15,12 @@ import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 public class DelayRuleFactory implements RuleFactory<Delay> {
 
 	/**
+	 * Constructs a {@code DelayRuleFactory}.
+	 */
+	public DelayRuleFactory() {	
+	}
+	
+	/**
 	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link Delay}.
 	 * 
 	 * @param delay the annotation

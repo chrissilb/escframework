@@ -46,27 +46,56 @@ public interface Event extends Comparable<Event>, Cloneable {
 	 * @return The source object.
 	 */
 	Object getSource();
+	
 	/**
 	 * Sets the {@code Event} source. {@link Dispatcher} allows to filter for it.
 	 * @param source The source object.
 	 */
 	void setSource(Object source);
-	
+
+	/**
+	 * Returns a {@code Queue} of event causes.
+	 * @return {@code Queue} of event causes
+	 */
 	Queue<Event> getCauses();
+	
+	/**
+	 * Adds an event cause
+	 * @param event the causative event
+	 */
 	void putCause(Event event);
 	
 	/**
 	 * Suspends the {@code Event}.
 	 */
 	void suspend();
+	
 	/**
 	 * Resumes the {@code Event}.
 	 */
 	void resume();
 	
+	/**
+	 * Merges a given {@code Event} into this event.
+	 * @param event the event to merge
+	 */
 	void merge(Event event);
 	
+	/**
+	 * Checks if the {@code Event} has a {@link Callback}.
+	 * @return true if yes, false if no
+	 */
 	boolean hasCallback();
+	
+	/**
+	 * Removes a {@link Callback}.
+	 * @return the removed {@code Callback}
+	 */
 	Callback<?> popCallback();	
+	
+	/**
+	 * Adds a {@link Callback}.
+	 * @param callback the added {@code Callback}
+	 */
 	void pushCallback(Callback<?> callback);
 }

@@ -7,10 +7,15 @@ import java.lang.annotation.Target;
 
 /**
  * Enables <a href="https://docs.oracle.com/javase/tutorial/java/annotations/repeating.html">
- * Repeating Annotation</a>of {@link Delay}.
+ * Repeating Annotations</a> of {@link Delay}.
  */
 @Retention(RetentionPolicy.RUNTIME) 
 @Target(ElementType.METHOD) 
 public @interface DelayList {
+	
+	/**
+	 * Returns an array of single {@code Delay} annotations.
+	 * @return array of single {@code Delay} annotations
+	 */
 	Delay[] value();
 }

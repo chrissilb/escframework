@@ -16,6 +16,12 @@ import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 public class MoreRuleFactory implements RuleFactory<More> {
 
 	/**
+	 * Constructs a {@code MoreRuleFactory}.
+	 */
+	public MoreRuleFactory() {	
+	}
+	
+	/**
 	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link More}.
 	 * 
 	 * @param more the annotation

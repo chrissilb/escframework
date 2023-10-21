@@ -14,6 +14,12 @@ import de.gwasch.code.escframework.events.patterns.RuleBuilder;
 public class AfterRuleFactory implements RuleFactory<After> {
 
 	/**
+	 * Constructs an {@code AfterRuleFactory}.
+	 */
+	public AfterRuleFactory() {	
+	}
+	
+	/**
 	 * Creates a {@code Rule} for the {@link PatternMatcher} indicated by {@link After}.
 	 * 
 	 * @param after the annotation

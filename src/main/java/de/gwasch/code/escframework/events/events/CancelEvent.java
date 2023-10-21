@@ -1,5 +1,8 @@
 package de.gwasch.code.escframework.events.events;
 
+/**
+ * {@code CancelEvent} is a control event to cancels process events.
+ */
 public class CancelEvent extends AbstractEvent {
 	
 	private Event patternEvent;

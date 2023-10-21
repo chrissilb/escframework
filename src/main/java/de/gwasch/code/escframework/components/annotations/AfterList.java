@@ -7,10 +7,15 @@ import java.lang.annotation.Target;
 
 /**
  * Enables <a href="https://docs.oracle.com/javase/tutorial/java/annotations/repeating.html">
- * Repeating Annotation</a>of {@link After}.
+ * Repeating Annotations</a> of {@link After}.
  */
 @Retention(RetentionPolicy.RUNTIME) 
 @Target(ElementType.METHOD) 
 public @interface AfterList {
+	
+	/**
+	 * Returns an array of single {@code After} annotations.
+	 * @return array of single {@code After} annotations
+	 */
 	After[] value();
 }
