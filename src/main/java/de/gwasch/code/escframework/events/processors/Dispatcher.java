@@ -1,6 +1,5 @@
 package de.gwasch.code.escframework.events.processors;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,14 +23,19 @@ import de.gwasch.code.escframework.events.listeners.StateListener;
 //todo, StateListener-einhängen berücksichtigen
 
 /**
- * A {@code Dispatcher} informs {@link EventListener} about processed {@link Event}s.
- * It allows filtering by an event source (defined by {@link Event#getSource()} and by the definition of a {@link Predicate}.
- * Furthermore, {@link StateListener}s can be registered to observe the status of the processor network.
+ * A {@code Dispatcher} informs {@link EventListener} about processed
+ * {@link Event}s. It allows filtering by an event source (defined by
+ * {@link Event#getSource()} and by the definition of a {@link Predicate}.
+ * Furthermore, {@link StateListener}s can be registered to observe the status
+ * of the processor network.
  * 
  * <p>
- * {@code Dispatcher}s integrate themselves into the processor network once the first {@code EventListener} is
- * registered. So they produce no overhead if they are not used. Although, they do not "hang out" themselves once the last
- * {@code EventListener} unregisters to avoid overhead by this.
+ * {@code Dispatcher}s integrate themselves into the processor network once the
+ * first {@code EventListener} is registered. So they produce no overhead if
+ * they are not used. Although, they do not "hang out" themselves once the last
+ * {@code EventListener} unregisters to avoid overhead by this. This is
+ * equivalent for the {@code StateListener}. Once needed a {@code Dispatcher}
+ * makes sure to be considered for all {@link ProcessListener}s.
  * 
  * @param <E> the event type considered by the {@code Dispatcher}
  * 
@@ -40,109 +44,111 @@ import de.gwasch.code.escframework.events.listeners.StateListener;
 public class Dispatcher<E extends Event> extends Processor<E> {
 
 	private List<EventListener<E>> listeners = null;
-	
-	//todo, Laufzeitoptimierung: Listen im Vorfeld aufbereiten
-	
-	private void retrieveListener(Map<Class<? extends Event>, List<EventListener<? extends Event>>> innerMap, Class<?> eventClass) {
-				
+
+	// todo, Laufzeitoptimierung: Listen im Vorfeld aufbereiten
+
+	private void retrieveListener(Map<Class<? extends Event>, List<EventListener<? extends Event>>> innerMap,
+			Class<?> eventClass) {
+
 		if (innerMap.containsKey(eventClass)) {
 			for (EventListener<? extends Event> listener : innerMap.get(eventClass)) {
 				@SuppressWarnings("unchecked")
-				EventListener<E> l = (EventListener<E>)listener;
+				EventListener<E> l = (EventListener<E>) listener;
 				listeners.add(l);
 			}
 		}
-		
+
 		if (eventClass.getSuperclass() != null) {
 			retrieveListener(innerMap, eventClass.getSuperclass());
 		}
-		
+
 		if (eventClass.equals(Event.class)) {
 			return;
 		}
-		
+
 		for (Class<?> interfaceClass : eventClass.getInterfaces()) {
 			if (Event.class.isAssignableFrom(interfaceClass)) {
 				retrieveListener(innerMap, interfaceClass);
 			}
 		}
 	}
-	
+
 	private List<EventListener<E>> retrieveListener(E event) {
-		
+
 		listeners = new LinkedList<>();
-		Object source = event.getSource();	
-		
+		Object source = event.getSource();
+
 		if (eventListenerMap.containsKey(null)) {
 			Map<Class<? extends Event>, List<EventListener<? extends Event>>> innerMap = eventListenerMap.get(null);
 			retrieveListener(innerMap, event.getClass());
-		}	
-		
+		}
+
 		if (source != null) {
 			if (eventListenerMap.containsKey(source)) {
-				Map<Class<? extends Event>, List<EventListener<? extends Event>>> innerMap = eventListenerMap.get(source);
+				Map<Class<? extends Event>, List<EventListener<? extends Event>>> innerMap = eventListenerMap
+						.get(source);
 				retrieveListener(innerMap, event.getClass());
 			}
 		}
-		
-		//assert listeners.size() > 0;
-		if (listeners.size() == 0 && !getName().equals("patternDispatcher") && !getName().equals("timer") && !getName().equals("transition")) {
-			System.out.println("Dispatcher: hier");
-		}
-		
+
+		// assert listeners.size() > 0;
+//		if (listeners.size() == 0 && !getName().equals("patternDispatcher") && !getName().equals("timer") && !getName().equals("transition")) {
+//			System.out.println("Dispatcher: hier");
+//		}
+
 		return listeners;
 	}
-	
+
 	class ProcessHandler implements ProcessListener<E> {
-		
+
 		public void process(E event) {
-			
+
 			if (nrActiveEvents == 0) {
 				for (StateListener listener : stateListeners) {
 					listener.onWorking();
 				}
 			}
-			
+
 			nrActiveEvents++;
-			
+
 			retrieveListener(event);
 			boolean forward = true;
-			
+
 			for (EventListener<E> listener : listeners) {
 				if (predicateMap.containsKey(listener)) {
 					@SuppressWarnings("unchecked")
-					Predicate<E> predicate = (Predicate<E>)predicateMap.get(listener);
+					Predicate<E> predicate = (Predicate<E>) predicateMap.get(listener);
 					if (!predicate.test(event)) {
 						continue;
 					}
 				}
 				forward &= listener.onProcess(event);
 			}
-				
+
 			if (forward) {
 				forward(event, callbackHandler);
-			}
-			else {
+			} else {
 				callback(event, false);
 			}
 		}
 	}
-	
+
 	class CallbackHandler implements CallbackListener<E> {
-		
+
 		public void finish(E event, boolean success) {
 
 			nrActiveEvents--;
-			
+
 			callback(event, success);
-						
+
 			retrieveListener(event);
-			
+
 			for (EventListener<E> listener : listeners) {
 				listener.onFinish(event, success);
 			}
-			
-			//NOTE: callback before this check to consider this does not lead to further events, esp. with Inlets
+
+			// NOTE: callback before this check to consider this does not lead to further
+			// events, esp. with Inlets
 			if (nrActiveEvents == 0) {
 				for (StateListener listener : stateListeners) {
 					listener.onIdle();
@@ -150,11 +156,11 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			}
 		}
 	}
-	
+
 	class ActivateHandler implements ProcessListener<ActivateEvent> {
-		
+
 		public void process(ActivateEvent event) {
-			
+
 			for (StateListener listener : stateListeners) {
 				listener.onActivate();
 			}
@@ -162,11 +168,11 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			forwardActivate(event, activateCallbackHandler);
 		}
 	}
-	
+
 	class ActivateCallbackHandler implements CallbackListener<ActivateEvent> {
 
 		public void finish(ActivateEvent event, boolean success) {
-			
+
 			for (StateListener listener : stateListeners) {
 				listener.onActivated(success);
 			}
@@ -174,11 +180,11 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			callback(event, success);
 		}
 	}
-	
+
 	class DeactivateHandler implements ProcessListener<DeactivateEvent> {
-		
+
 		public void process(DeactivateEvent event) {
-			
+
 			for (StateListener listener : stateListeners) {
 				listener.onDeactivate();
 			}
@@ -186,11 +192,11 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			forwardDeactivate(event, deactivateCallbackHandler);
 		}
 	}
-	
+
 	class DeactivateCallbackHandler implements CallbackListener<DeactivateEvent> {
 
 		public void finish(DeactivateEvent event, boolean success) {
-			
+
 			for (StateListener listener : stateListeners) {
 				listener.onDeactivated(success);
 			}
@@ -198,11 +204,11 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			callback(event, success);
 		}
 	}
-	
+
 	class SuspendHandler implements ProcessListener<SuspendEvent> {
-		
+
 		public void process(SuspendEvent event) {
-			
+
 			for (StateListener listener : stateListeners) {
 				listener.onSuspend();
 			}
@@ -210,11 +216,11 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			forwardSuspend(event, suspendCallbackHandler);
 		}
 	}
-	
+
 	class SuspendCallbackHandler implements CallbackListener<SuspendEvent> {
 
 		public void finish(SuspendEvent event, boolean success) {
-			
+
 			for (StateListener listener : stateListeners) {
 				listener.onSuspended(success);
 			}
@@ -222,11 +228,11 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			callback(event, success);
 		}
 	}
-	
+
 	class ResumeHandler implements ProcessListener<ResumeEvent> {
-		
+
 		public void process(ResumeEvent event) {
-			
+
 			for (StateListener listener : stateListeners) {
 				listener.onResume();
 			}
@@ -234,11 +240,11 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			forwardResume(event, resumeCallbackHandler);
 		}
 	}
-	
+
 	class ResumeCallbackHandler implements CallbackListener<ResumeEvent> {
 
 		public void finish(ResumeEvent event, boolean success) {
-			
+
 			for (StateListener listener : stateListeners) {
 				listener.onResumed(success);
 			}
@@ -246,11 +252,11 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			callback(event, success);
 		}
 	}
-	
+
 	class CancelHandler implements ProcessListener<CancelEvent> {
-		
+
 		public void process(CancelEvent event) {
-			
+
 			for (StateListener listener : stateListeners) {
 				listener.onCancel();
 			}
@@ -258,11 +264,11 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			forwardCancel(event, cancelCallbackHandler);
 		}
 	}
-	
+
 	class CancelCallbackHandler implements CallbackListener<CancelEvent> {
 
 		public void finish(CancelEvent event, boolean success) {
-			
+
 			for (StateListener listener : stateListeners) {
 				listener.onCancelled(success);
 			}
@@ -274,23 +280,24 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 	private Map<Object, Map<Class<? extends Event>, List<EventListener<? extends Event>>>> eventListenerMap;
 	private Map<EventListener<? extends Event>, Predicate<? extends Event>> predicateMap;
 	private Set<StateListener> stateListeners;
-	
+
 	private CallbackListener<E> callbackHandler;
 	private CallbackListener<ActivateEvent> activateCallbackHandler;
 	private CallbackListener<DeactivateEvent> deactivateCallbackHandler;
 	private CallbackListener<SuspendEvent> suspendCallbackHandler;
 	private CallbackListener<ResumeEvent> resumeCallbackHandler;
 	private CallbackListener<CancelEvent> cancelCallbackHandler;
-	
+
 	private int nrActiveEvents;
-	
+
 	/**
 	 * Constructs a {@code Dispatcher}.
+	 * 
 	 * @param name the name of this {@code Processor}
 	 */
 	public Dispatcher(String name) {
 		super(name);
-		
+
 		eventListenerMap = new HashMap<>();
 		predicateMap = new HashMap<>();
 		stateListeners = new HashSet<>();
@@ -301,74 +308,78 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 		resumeCallbackHandler = new ResumeCallbackHandler();
 		cancelCallbackHandler = new CancelCallbackHandler();
 		nrActiveEvents = 0;
-		
+
 //		setHandler(null, new ProcessHandler());
-		installListener(ActivateEvent.class, new ActivateHandler());
-		installListener(DeactivateEvent.class, new DeactivateHandler());
-		installListener(SuspendEvent.class, new SuspendHandler());
-		installListener(ResumeEvent.class, new ResumeHandler());
-		installListener(CancelEvent.class, new CancelHandler());
+//		installListener(ActivateEvent.class, new ActivateHandler());
+//		installListener(DeactivateEvent.class, new DeactivateHandler());
+//		installListener(SuspendEvent.class, new SuspendHandler());
+//		installListener(ResumeEvent.class, new ResumeHandler());
+//		installListener(CancelEvent.class, new CancelHandler());
 	}
-	
+
 	/**
-	 * Constructs a {@code Dispatcher}. The name of this {@code Processor} is an empty {@code String}.
+	 * Constructs a {@code Dispatcher}. The name of this {@code Processor} is an
+	 * empty {@code String}.
 	 */
 	public Dispatcher() {
 		this("");
 	}
-		
+
 	/**
 	 * Registers an event listener.
-	 * @param <F> the type of the registered {@code Event}s
-	 * @param source the event source provided by {@link Event#getSource()}
+	 * 
+	 * @param <F>        the type of the registered {@code Event}s
+	 * @param source     the event source provided by {@link Event#getSource()}
 	 * @param eventClass {@link Class} instance of the event type
-	 * @param listener the event listener
+	 * @param listener   the event listener
 	 */
 	public <F extends Event> void register(Object source, Class<F> eventClass, EventListener<? super F> listener) {
-		
+
 		if (!eventListenerMap.containsKey(source)) {
 			eventListenerMap.put(source, new HashMap<>());
 		}
-		
+
 		Map<Class<? extends Event>, List<EventListener<? extends Event>>> innerMap = eventListenerMap.get(source);
-		
+
 		if (!innerMap.containsKey(eventClass)) {
 			innerMap.put(eventClass, new ArrayList<>());
 		}
-		
+
 		innerMap.get(eventClass).add(listener);
-		
+
 		if (getListener(null) == null) {
 			installListener(null, new ProcessHandler());
 		}
 	}
-	
+
 	/**
 	 * Registers an event listener.
-	 * @param <F> the type of the registered {@code Event}s
+	 * 
+	 * @param <F>        the type of the registered {@code Event}s
 	 * @param eventClass {@link Class} instance of the event type
-	 * @param listener the event listener
+	 * @param listener   the event listener
 	 */
 	public <F extends Event> void register(Class<F> eventClass, EventListener<? super F> listener) {
 		register(null, eventClass, listener);
 	}
-	
+
 	/**
 	 * Unregisters all event listeners.
 	 */
 	public void unregisterEventListeners() {
 		eventListenerMap.clear();
 	}
-	
+
 	/**
 	 * Unregisters a specific event listener.
-	 * @param <F> the type of the registered {@code Event}s
-	 * @param source the event source provided by {@link Event#getSource()}
+	 * 
+	 * @param <F>        the type of the registered {@code Event}s
+	 * @param source     the event source provided by {@link Event#getSource()}
 	 * @param eventClass {@link Class} instance of the event type
-	 * @param listener the event listener
+	 * @param listener   the event listener
 	 */
 	public <F extends Event> void unregister(Object source, Class<F> eventClass, EventListener<? super F> listener) {
-		
+
 		Map<Class<? extends Event>, List<EventListener<? extends Event>>> innerMap = eventListenerMap.get(source);
 		if (innerMap == null) {
 			return;
@@ -383,37 +394,39 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 		if (listeners == null) {
 			return;
 		}
-		
+
 		if (listeners.size() == 1) {
 			if (listeners.contains(listener)) {
 				eventListenerMap.remove(eventClass);
-			}			
-		}
-		else {
+			}
+		} else {
 			listeners.remove(listener);
 		}
-		
+
 	}
-	
+
 	/**
-	 * Unregisters all event listeners of a specific event type. 
+	 * Unregisters all event listeners of a specific event type.
+	 * 
 	 * @param eventClass {@link Class} instance of the event type
 	 */
 	public void unregister(Class<E> eventClass) {
 		unregister(null, eventClass, null);
 	}
-	
+
 	/**
-	 * Unregisters an event listeners of a specific event type. 
+	 * Unregisters an event listeners of a specific event type.
+	 * 
 	 * @param eventClass {@link Class} instance of the event type
-	 * @param listener the event listener
+	 * @param listener   the event listener
 	 */
 	public void unregister(Class<E> eventClass, EventListener<? super E> listener) {
 		unregister(null, eventClass, listener);
 	}
-	
+
 	/**
 	 * Unregisters an event listener.
+	 * 
 	 * @param listener the event listener
 	 */
 	public void unregister(Object listener) {
@@ -423,51 +436,66 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 			}
 		}
 	}
-		
+
 	/**
 	 * Registers a {@link Predicate} as an additional filter for a listener.
-	 * @param <F> the type of the registered {@code Event}s
-	 * @param listener the (already registered) event listener
+	 * 
+	 * @param <F>       the type of the registered {@code Event}s
+	 * @param listener  the (already registered) event listener
 	 * @param predicate the predicate
 	 */
 	public <F extends Event> void registerListenerPredicate(EventListener<F> listener, Predicate<F> predicate) {
-		predicateMap.put(listener, predicate);		
+		predicateMap.put(listener, predicate);
 	}
-	
+
 	/**
 	 * Unregisters the {@link Predicate} of an event listener.
+	 * 
 	 * @param listener the event listener
 	 */
 	public void unregisterListenerPredicate(EventListener<?> listener) {
-		predicateMap.remove(listener);		
+		predicateMap.remove(listener);
 	}
-	
+
 	/**
 	 * Registers a {@link StateListener}.
+	 * 
 	 * @param listener the state listener
 	 */
 	public void register(StateListener listener) {
-		assert false;
 		stateListeners.add(listener);
+
+		if (getListener(null) == null) {
+			installListener(null, new ProcessHandler());
+		}
+
+		if (getListener(ActivateEvent.class) == null) {
+			installListener(ActivateEvent.class, new ActivateHandler());
+			installListener(DeactivateEvent.class, new DeactivateHandler());
+			installListener(SuspendEvent.class, new SuspendHandler());
+			installListener(ResumeEvent.class, new ResumeHandler());
+			installListener(CancelEvent.class, new CancelHandler());
+		}
 	}
-	
+
 	/**
 	 * Unregisters a {@link StateListener}.
+	 * 
 	 * @param listener the state listener
 	 */
 	public void unregister(StateListener listener) {
 		stateListeners.remove(listener);
 	}
-	
+
 	/**
-	 * Unregisters all state listeners. 
+	 * Unregisters all state listeners.
 	 */
 	public void unregisterStateListeners() {
 		stateListeners.clear();
 	}
-	
-	/** 
-	 *  Unregisters all event and state listeners.
+
+	/**
+	 * Unregisters all event and state listeners.
 	 */
 	public void unregisterAll() {
 		unregisterEventListeners();
