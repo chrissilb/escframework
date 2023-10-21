@@ -2,6 +2,9 @@ package de.gwasch.code.escframework.utils.combinatorics;
 
 import java.util.Iterator;
 
+/**
+ * Provides a variation of integers with repetitions.
+ */
 public class VariationWithRepetitions extends CoBase {
 
 	public VariationWithRepetitions(int n, int k) {

@@ -8,10 +8,10 @@ import de.gwasch.code.escframework.states.exceptions.MaskAlreadyDefinedException
 public class MaskPool
 {
     private static MaskPool theInstance = null;
-    Map<Class<?>, MaskSet<?>> maskPool;
+    Map<Class<?>, MaskPair<?>> maskPool;
 
     private MaskPool() { 
-    	maskPool = new HashMap<Class<?>, MaskSet<?>>();
+    	maskPool = new HashMap<Class<?>, MaskPair<?>>();
     }
 
     public static MaskPool getInstance() {
@@ -19,7 +19,7 @@ public class MaskPool
         return theInstance;
     }
 
-    public void addMaskSet(Class<?> type) {
+    public void addMaskPair(Class<?> type) {
         if (maskPool.containsKey(type)) {
             throw new MaskAlreadyDefinedException(type);
         }
@@ -28,7 +28,7 @@ public class MaskPool
     }
 
 
-    public <T extends Enum<T>> void addMaskSet(Class<T> type, T integrativeState) {
+    public <T extends Enum<T>> void addMaskPair(Class<T> type, T integrativeState) {
         if (maskPool.containsKey(type)) {
             throw new MaskAlreadyDefinedException(type);
         }
@@ -62,19 +62,19 @@ public class MaskPool
             }
         }
 
-        maskPool.put(type, new MaskSet<T>(startMask, stopMask));
+        maskPool.put(type, new MaskPair<T>(startMask, stopMask));
     }
 
 
-    public <T> MaskSet<T> getMaskSet(Class<T> type) 
+    public <T> MaskPair<T> getMaskPair(Class<T> type) 
     {
 		@SuppressWarnings("unchecked")
-    	MaskSet<T> maskSet = (MaskSet<T>)maskPool.get(type);
-		return maskSet;
+    	MaskPair<T> maskPair = (MaskPair<T>)maskPool.get(type);
+		return maskPair;
     }
 
 
-    public boolean hasMaskSet(Class<?> type) {
+    public boolean hasMaskPair(Class<?> type) {
         return maskPool.containsKey(type);
     }
 }

@@ -1,14 +1,18 @@
 package de.gwasch.code.escframework.states.utils;
 
-public class MaskSet<T>
+/**
+ * A {@code MaskPair} contains two masks.
+ * @param <T>
+ */
+public class MaskPair<T>
 {
     private Mask<T, T> startMask;
     private Mask<T, T> stopMask;
 
-    public MaskSet(Mask<T, T> startmask, Mask<T, T> stopmask)
+    public MaskPair(Mask<T, T> startMask, Mask<T, T> stopMask)
     {
-        startMask = startmask;
-        stopMask = stopmask;
+        this.startMask = startMask;
+        this.stopMask = stopMask;
     }
 
     public Mask<T, T> getStartMask() {

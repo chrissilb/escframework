@@ -2,7 +2,9 @@ package de.gwasch.code.escframework.utils.combinatorics;
 
 import java.util.Iterator;
 
-
+/**
+ * Provides a combination of integers.
+ */
 public class Combination extends CoBase {
 	
 	public Combination(int n, int k) {
