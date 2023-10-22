@@ -13,6 +13,14 @@ import de.gwasch.code.escframework.states.utils.TypeUtil;
  */
 public class AddState<T extends Number> extends AbstractBinaryState<T> {
 
+	/**
+	 * Constructs an {@code AddState}.
+	 * 
+	 * @param stateType the type of state values
+	 * @param name the state name
+	 * @param paramState1 first state parameter
+	 * @param paramState2 second state parameter
+	 */
 	public AddState(Class<T> stateType, String name, State<T> paramState1, State<T> paramState2) {
 		super(stateType, name, paramState1, paramState2);
 

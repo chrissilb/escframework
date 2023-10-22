@@ -42,6 +42,11 @@ public abstract class State<T> {
 	private TransitionEvent<?> anyTransitionEvent;
 	private Class<TransitionEvent<?>> anyTransitionEventClass;
 
+	/**
+	 * Constructs a {@code State}.
+	 * @param stateType the type of state values
+	 * @param name the state name
+	 */
 	@SuppressWarnings("unchecked")
 	protected State(Class<T> stateType, String name) {
 

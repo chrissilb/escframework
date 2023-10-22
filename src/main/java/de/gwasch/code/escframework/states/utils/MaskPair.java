@@ -2,7 +2,7 @@ package de.gwasch.code.escframework.states.utils;
 
 /**
  * A {@code MaskPair} contains two masks.
- * @param <T>
+ * @param <T> the type of the {@code Mask} values
  */
 public class MaskPair<T>
 {

@@ -31,6 +31,14 @@ public abstract class AbstractBinaryState<T> extends State<T> {
 	private TransitionHandler1 transitionHandler1;
 	private TransitionHandler2 transitionHandler2;
 
+	/**
+	 * Constructs an {@code AbstractBinaryState}.
+	 * 
+	 * @param stateType the type of state values
+	 * @param name the state name
+	 * @param paramState1 first state parameter
+	 * @param paramState2 second state parameter
+	 */
 	protected AbstractBinaryState(Class<T> stateType, String name, State<T> paramState1, State<T> paramState2) {
 		super(stateType, name);
 

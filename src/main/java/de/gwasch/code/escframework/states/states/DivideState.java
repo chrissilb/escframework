@@ -13,6 +13,14 @@ import de.gwasch.code.escframework.states.utils.TypeUtil;
  */
 public class DivideState<T extends Number> extends AbstractBinaryState<T> {
 
+	/**
+	 * Constructs a {@code DivideState}.
+	 * 
+	 * @param stateType the type of state values
+	 * @param name the state name
+	 * @param paramState1 first state parameter
+	 * @param paramState2 second state parameter
+	 */
 	public DivideState(Class<T> stateType, String name, State<T> paramState1, State<T> paramState2) {
 		super(stateType, name, paramState1, paramState2);
 
