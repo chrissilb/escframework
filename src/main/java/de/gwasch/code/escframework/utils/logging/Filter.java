@@ -22,13 +22,25 @@ public class Filter implements Cloneable {
 	public String getPattern() {
 		return pattern;
 	}
+	
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
+	}
 
 	public boolean getAllow() {
 		return allow;
 	}
+	
+	public void setAllow(boolean allow) {
+		this.allow = allow;
+	}
 
 	public boolean getDeactivated() {
 		return deactivated;
+	}
+	
+	public void setDeactivated(boolean deactivated) {
+		this.deactivated = deactivated;
 	}
 
 	public Filter clone() {
