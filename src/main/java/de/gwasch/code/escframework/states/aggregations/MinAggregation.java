@@ -12,6 +12,10 @@ public class MinAggregation<T extends Comparable<T>> extends ComparableAggregati
 	public MinAggregation() {
 	}
 
+	/**
+	 * Returns the minimal child value.
+	 * @return the minimal child value
+	 */
 	public T getValue() {
 		return Collections.min(getList());
 	}

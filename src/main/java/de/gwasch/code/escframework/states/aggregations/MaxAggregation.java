@@ -13,6 +13,10 @@ public class MaxAggregation<T extends Comparable<T>> extends ComparableAggregati
 	public MaxAggregation() {
 	}
 
+	/**
+	 * Returns the maximal child value.
+	 * @return the maximal child value
+	 */
 	public T getValue() {
 		return Collections.max(getList());
 	}

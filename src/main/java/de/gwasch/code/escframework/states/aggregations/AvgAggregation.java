@@ -10,36 +10,51 @@ import de.gwasch.code.escframework.states.utils.TypeUtil;
  * 
  *  @param <T> the type of the child values and result value
  */
-public class AvgAggregation<T extends Number & Comparable<T>> extends Aggregation<T> {
+public class AvgAggregation<T extends Number & Comparable<T>> implements Aggregation<T> {
 
-	private Class<T> stateType;
+	private Class<T> type;
 	private T sum;
 	private int count;
 
-	public AvgAggregation(Class<T> stateType) {
+	/**
+	 * Constructs an {@code AvgAggregation}.
+	 * @param type the type of the child values and result value
+	 */
+	public AvgAggregation(Class<T> type) {
 
-		this.stateType = stateType;
-		sum = TypeUtil.getDefaultValue(stateType);
+		this.type = type;
+		sum = TypeUtil.getDefaultValue(type);
 		count = 0;
 	}
 
-	public void addChildValue(T value) {
+	/**
+	 * Adds a child value.
+	 * @param childValue the child value
+	 */
+	public void addChildValue(T childValue) {
 
-		sum = TypeUtil.add(stateType, sum, value);
+		sum = TypeUtil.add(type, sum, childValue);
 		count++;
-
 	}
 
-	public void removeChildValue(T value) {
+	/**
+	 * Removes a child value.
+	 * @param childValue the child value
+	 */
+	public void removeChildValue(T childValue) {
 
-		sum = TypeUtil.substract(stateType, sum, value);
+		sum = TypeUtil.substract(type, sum, childValue);
 		count--;
 
 	}
 
+	/**
+	 * Returns the arithmetic average of child values.
+	 * @return the arithmetic average of child values
+	 */
 	public T getValue() {
-		return (count != 0) ? TypeUtil.divide(stateType, sum, TypeUtil.cast(stateType, count))
-				: TypeUtil.getDefaultValue(stateType);
+		return (count != 0) ? TypeUtil.divide(type, sum, TypeUtil.cast(type, count))
+				: TypeUtil.getDefaultValue(type);
 
 	}
 }

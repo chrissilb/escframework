@@ -41,19 +41,31 @@ public class AggregateState<T> extends State<T> {
 		transitionHandler = new TransitionHandler();
 	}
 
+	/**
+	 * Returns the aggregation.
+	 * @return the aggregation
+	 */
 	public Aggregation<T> getAggregation() {
 		return aggregation;
 	}
 
-	public void addChildState(State<T> state) {
-		state.registerTransitionListener(transitionHandler);
-		aggregation.addChildValue(state.getValue());
+	/**
+	 * Adds a child state.
+	 * @param childState the child state
+	 */
+	public void addChildState(State<T> childState) {
+		childState.registerTransitionListener(transitionHandler);
+		aggregation.addChildValue(childState.getValue());
 		setStateValue(aggregation.getValue());
 	}
 
-	public void removeChildState(State<T> state) {
-		state.unregisterTransitionListener(transitionHandler);
-		aggregation.removeChildValue(state.getValue());
+	/**
+	 * Removes a child state.
+	 * @param childState the child state
+	 */
+	public void removeChildState(State<T> childState) {
+		childState.unregisterTransitionListener(transitionHandler);
+		aggregation.removeChildValue(childState.getValue());
 		setStateValue(aggregation.getValue());
 	}
 }

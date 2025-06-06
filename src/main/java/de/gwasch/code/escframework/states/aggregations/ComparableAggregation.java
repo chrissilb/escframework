@@ -8,7 +8,7 @@ import java.util.List;
  * 
  * @param <T> the type of the child values and result value
  */
-public abstract class ComparableAggregation<T extends Comparable<T>> extends Aggregation<T> {
+public abstract class ComparableAggregation<T extends Comparable<T>> implements Aggregation<T> {
  
 	private List<T> list;
 
@@ -20,11 +20,19 @@ public abstract class ComparableAggregation<T extends Comparable<T>> extends Agg
 		return list;
 	}
 	
-	public void addChildValue(T value) {
-		list.add(value);
+	/**
+	 * Adds a child value.
+	 * @param childValue the child value
+	 */
+	public void addChildValue(T childValue) {
+		list.add(childValue);
 	}
 
-	public void removeChildValue(T value) {
-		list.remove(value);
+	/**
+	 * Removes a child value.
+	 * @param childValue the child value
+	 */
+	public void removeChildValue(T childValue) {
+		list.remove(childValue);
 	}
 }

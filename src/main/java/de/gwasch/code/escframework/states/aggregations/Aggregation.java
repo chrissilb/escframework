@@ -10,14 +10,23 @@ import de.gwasch.code.escframework.states.states.AggregateState;
  * 
  * @param <T> the type of the child values and result value
  */
-public abstract class Aggregation<T> {
+public interface Aggregation<T> {
 
-	protected Aggregation() {
-	}
+	/**
+	 * Adds a child value.
+	 * @param childValue the child value
+	 */
+	void addChildValue(T childValue);
 
-	public abstract void addChildValue(T value);
+	/**
+	 * Removes a child value.
+	 * @param childValue the child value
+	 */
+	void removeChildValue(T childValue);
 
-	public abstract void removeChildValue(T value);
-
-	public abstract T getValue();
+	/**
+	 * Returns the aggregated value.
+	 * @return the aggregated value
+	 */
+	T getValue();
 }
