@@ -95,6 +95,14 @@ public class StrivingState<T extends Enum<T>> extends State<T> {
 	private State<T> startRestrictiveState;
 	private State<T> stopRestrictiveState;
 
+	/**
+	 * Constructs a {@code StrivingState}.
+	 * 
+	 * @param stateType       the type of state values
+	 * @param name            the state name
+	 * @param restrictionType the restriction type
+	 * @param strivedState    the strived state
+	 */
 	public StrivingState(Class<T> stateType, String name, RestrictionType restrictionType, State<T> strivedState) {
 		super(stateType, name);
 
@@ -110,22 +118,54 @@ public class StrivingState<T extends Enum<T>> extends State<T> {
 		strivedState.registerTransitionListener(new OnStrivedTransition());
 	}
 
+	/**
+	 * Constructs a {@code StrivingState}. A {@code SimpleState} is implicitly used
+	 * as {@code strivedState}.
+	 * 
+	 * @param stateType       the type of state values
+	 * @param name            the state name
+	 * @param restrictionType the restriction type
+	 */
 	public StrivingState(Class<T> stateType, String name, RestrictionType restrictionType) {
 		this(stateType, name, restrictionType, new SimpleState<T>(stateType, name));
 	}
 
+	/**
+	 * Constructs a {@code StrivingState} with a defensive {@code restrictionType}.
+	 * 
+	 * @param stateType    the type of state values
+	 * @param name         the state name
+	 * @param strivedState the strived state
+	 */
 	public StrivingState(Class<T> stateType, String name, State<T> strivedState) {
 		this(stateType, name, RestrictionType.DEFENSIVE, strivedState);
 	}
 
+	/**
+	 * Returns the {@code restrictionType}.
+	 * 
+	 * @return the restriction type
+	 */
 	public RestrictionType getRestrictionType() {
 		return restrictionType;
 	}
 
+	/**
+	 * Returns the {@code startRestrictiveState} which influences the exposed state
+	 * while the strived state is set to a higher value.
+	 * 
+	 * @return the start restrictive state
+	 */
 	public State<T> getStartRestriction() {
 		return startRestrictiveState;
 	}
-
+	
+	/**
+	 * Sets the {@code startRestrictiveState} which influences the exposed state
+	 * while the strived state is set to a higher value.
+	 * 
+	 * @param restriction the start restrictive state
+	 */
 	public void setStartRestriction(State<T> restriction) {
 
 		if (startRestrictiveState == null) {
@@ -135,10 +175,22 @@ public class StrivingState<T extends Enum<T>> extends State<T> {
 		startRestrictiveState = restriction;
 	}
 
+	/**
+	 * Returns the {@code stopRestrictiveState} which influences the exposed state
+	 * while the strived state is set to a lower value.
+	 * 
+	 * @return the stop restrictive state
+	 */
 	public State<T> getStopRestriction() {
 		return stopRestrictiveState;
 	}
 
+	/**
+	 * Sets the {@code stopRestrictiveState} which influences the exposed state
+	 * while the strived state is set to a lower value.
+	 * 
+	 * @param restriction the stop restrictive state
+	 */
 	public void setStopRestriction(State<T> restriction) {
 
 		if (stopRestrictiveState == null) {
@@ -151,7 +203,7 @@ public class StrivingState<T extends Enum<T>> extends State<T> {
 	public void setValue(T value) {
 
 		if (strivedState.getValue().equals(value) && !getValue().equals(value)
-				&& (restrictionType == RestrictionType.OFFENSIVE || getActivityHandler() != null)) {
+				&& (restrictionType == RestrictionType.OFFENSIVE || getActivityListener() != null)) {
 
 			strivedState.fireTransitionEvents();
 		} else {
@@ -159,6 +211,10 @@ public class StrivingState<T extends Enum<T>> extends State<T> {
 		}
 	}
 
+	/**
+	 * Returns the strived state.
+	 * @return the strived state
+	 */
 	public State<T> getStrivedState() {
 		return strivedState;
 	}

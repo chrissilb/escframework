@@ -14,8 +14,8 @@ public abstract class CompositeState<T> extends State<T> {
     protected abstract State<T> getRootState();
 
 
-    public ActivityListener<T> getActivityHandler() {
-    	return getRootState().getActivityHandler();
+    public ActivityListener<T> getActivityListener() {
+    	return getRootState().getActivityListener();
     }
     
     public void setActivityHandler(ActivityListener<T> handler) {

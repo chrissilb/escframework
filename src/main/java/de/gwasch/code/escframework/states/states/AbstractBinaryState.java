@@ -4,9 +4,11 @@ import de.gwasch.code.escframework.events.listeners.EventAdapter;
 import de.gwasch.code.escframework.states.events.TransitionEvent;
 
 /**
- * Abstract super type of {@code State} classes with two {@code State} parameters of the same type.
+ * Abstract super type of {@code State} classes with two {@code State}
+ * parameters of the same type.
  * 
- * @param <T> the type of the {@code State} value and its parameter {@code State} values
+ * @param <T> the type of the {@code State} value and its parameter
+ *            {@code State} values
  */
 public abstract class AbstractBinaryState<T> extends State<T> {
 
@@ -25,7 +27,7 @@ public abstract class AbstractBinaryState<T> extends State<T> {
 			return true;
 		}
 	}
-	
+
 	private State<T> paramState1;
 	private State<T> paramState2;
 	private TransitionHandler1 transitionHandler1;
@@ -34,8 +36,8 @@ public abstract class AbstractBinaryState<T> extends State<T> {
 	/**
 	 * Constructs an {@code AbstractBinaryState}.
 	 * 
-	 * @param stateType the type of state values
-	 * @param name the state name
+	 * @param stateType   the type of state values
+	 * @param name        the state name
 	 * @param paramState1 first state parameter
 	 * @param paramState2 second state parameter
 	 */
@@ -54,6 +56,7 @@ public abstract class AbstractBinaryState<T> extends State<T> {
 
 	/**
 	 * Returns the {@code State} of the first parameter.
+	 * 
 	 * @return {@code State} of the first parameter
 	 */
 	public State<T> getParamState1() {
@@ -62,6 +65,7 @@ public abstract class AbstractBinaryState<T> extends State<T> {
 
 	/**
 	 * Sets the {@code State} of the first parameter.
+	 * 
 	 * @param paramState1 the {@code State} of the first parameter
 	 */
 	public void setParamState1(State<T> paramState1) {
@@ -76,6 +80,7 @@ public abstract class AbstractBinaryState<T> extends State<T> {
 
 	/**
 	 * Returns the {@code State} of the second parameter.
+	 * 
 	 * @return {@code State} of the second parameter
 	 */
 	public State<T> getParamState2() {
@@ -84,6 +89,7 @@ public abstract class AbstractBinaryState<T> extends State<T> {
 
 	/**
 	 * Sets the {@code State} of the second parameter.
+	 * 
 	 * @param paramState2 the {@code State} of the second parameter
 	 */
 	public void setParamState2(State<T> paramState2) {

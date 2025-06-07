@@ -14,7 +14,10 @@ import de.gwasch.code.escframework.states.utils.TypeUtil;
 
 /**
  * {@code State} is the main class of all states. All states communicate via
- * their own processor network.
+ * their common state processor network. A State allows a transition listener to
+ * get informed about state value changes. Such a listener might be dependent on
+ * a specific value type or not. Furthermore, an activity handler can be
+ * installed to influence state transitions.
  * 
  * @param <T> the type of the {@code State} value
  */
@@ -33,7 +36,7 @@ public abstract class State<T> {
 	private String name;
 
 	private TransitionMode<T> transitionMode;
-	private ActivityListener<T> activityHandler;
+	private ActivityListener<T> activityListener;
 
 	private Class<T> stateType;
 	private T stateValue;
@@ -44,8 +47,9 @@ public abstract class State<T> {
 
 	/**
 	 * Constructs a {@code State}.
+	 * 
 	 * @param stateType the type of state values
-	 * @param name the state name
+	 * @param name      the state name
 	 */
 	@SuppressWarnings("unchecked")
 	protected State(Class<T> stateType, String name) {
@@ -66,28 +70,49 @@ public abstract class State<T> {
 		stateValue = TypeUtil.getDefaultValue(stateType);
 	}
 
+	/**
+	 * Registers for state transitions of a specific type.
+	 * @param listener the listener instance
+	 */
 	public void registerTransitionListener(EventListener<TransitionEvent<T>> listener) {
 		eventDispatcher.register(this, transitionEventClass, listener);
 	}
 
+	/**
+	 * Unregisters for state transitions of a specific type.
+	 * @param listener the listener instance
+	 */
 	public void unregisterTransitionListener(EventListener<TransitionEvent<T>> listener) {
 		eventDispatcher.unregister(this, transitionEventClass, listener);
 	}
-
+	
+	/**
+	 * Registers for state transitions of any type.
+	 * @param listener the listener instance
+	 */
 	public void registerAnyTransitionListener(EventListener<TransitionEvent<?>> listener) {
 		eventDispatcher.register(this, anyTransitionEventClass, listener);
 	}
 
+	/**
+	 * Unregisters for state transitions of any type.
+	 * @param listener the listener instance
+	 */
 	public void unregisterAnyTransitionListener(EventListener<TransitionEvent<?>> listener) {
 		eventDispatcher.unregister(this, transitionEventClass, listener);
 	}
 
-	public ActivityListener<T> getActivityHandler() {
-		return activityHandler;
+	/**
+	 * Returns the activity listener which can influence state transitions.
+	 * 
+	 * @return the activity listener
+	 */
+	public ActivityListener<T> getActivityListener() {
+		return activityListener;
 	}
 
-	public void setActivityHandler(ActivityListener<T> handler) {
-		activityHandler = handler;
+	public void setActivityHandler(ActivityListener<T> listener) {
+		activityListener = listener;
 	}
 
 	public TransitionMode<T> getTransitionMode() {
@@ -123,7 +148,7 @@ public abstract class State<T> {
 			if (stateValue == newValue)
 				return;
 
-			if (activityHandler != null && !activityHandler.activity(newValue, stateValue))
+			if (activityListener != null && !activityListener.activity(newValue, stateValue))
 				return;
 
 			T oldValue = stateValue;
