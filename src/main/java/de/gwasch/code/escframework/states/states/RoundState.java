@@ -85,7 +85,7 @@ public class RoundState extends State<Double> {
 
 	/**
 	 * Sets the state which value indicates the number of decimal places.
-	 * @param numberState The state which value indicates the number of decimal places.
+	 * @param digitsState The state which value indicates the number of decimal places.
 	 */
 	public void setDigitsState(State<Integer> digitsState) {
 

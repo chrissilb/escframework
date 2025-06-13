@@ -3,10 +3,10 @@ package de.gwasch.code.escframework.states.listeners;
 import de.gwasch.code.escframework.states.states.State;
 
 /**
- * An {@code ActivityListener} can block a {@link State} transition.
+ * An {@code ActivityHandler} can block a {@link State} transition.
  * @param <T> the type of the {@code State} value
  */
-public interface ActivityListener<T> {
+public interface ActivityHandler<T> {
 	
 	/**
 	 * Accepts the transition or not

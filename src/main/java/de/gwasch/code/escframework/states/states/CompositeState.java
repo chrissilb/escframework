@@ -2,7 +2,7 @@ package de.gwasch.code.escframework.states.states;
 
 import de.gwasch.code.escframework.events.listeners.EventListener;
 import de.gwasch.code.escframework.states.events.TransitionEvent;
-import de.gwasch.code.escframework.states.listeners.ActivityListener;
+import de.gwasch.code.escframework.states.listeners.ActivityHandler;
 import de.gwasch.code.escframework.states.transistionmodes.TransitionMode;
 
 public abstract class CompositeState<T> extends State<T> {
@@ -14,11 +14,11 @@ public abstract class CompositeState<T> extends State<T> {
     protected abstract State<T> getRootState();
 
 
-    public ActivityListener<T> getActivityListener() {
+    public ActivityHandler<T> getActivityListener() {
     	return getRootState().getActivityListener();
     }
     
-    public void setActivityHandler(ActivityListener<T> handler) {
+    public void setActivityHandler(ActivityHandler<T> handler) {
     	getRootState().setActivityHandler(handler);
     }
    

@@ -56,7 +56,6 @@ public abstract class AbstractBinaryState<T> extends State<T> {
 
 	/**
 	 * Returns the {@code State} of the first parameter.
-	 * 
 	 * @return {@code State} of the first parameter
 	 */
 	public State<T> getParamState1() {
@@ -65,7 +64,6 @@ public abstract class AbstractBinaryState<T> extends State<T> {
 
 	/**
 	 * Sets the {@code State} of the first parameter.
-	 * 
 	 * @param paramState1 the {@code State} of the first parameter
 	 */
 	public void setParamState1(State<T> paramState1) {
