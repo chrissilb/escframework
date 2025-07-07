@@ -11,8 +11,8 @@ public class MultipleAsteriskInsteadException extends RuntimeException {
 	}
 	
 	public MultipleAsteriskInsteadException(String typeName, Throwable cause) {
-		super("Multiple asterisk instead methods ('type' equals " + AsteriskType.ALL_INSTEAD + " or " 
-				+ AsteriskType.ELSE_INSTEAD + ") not allowed in class '" + typeName + "'.", cause);
+		super("Multiple asterisk instead methods ('type' equals " + AsteriskType.INSTEAD_ALL + " or " 
+				+ AsteriskType.INSTEAD_ELSE + ") not allowed in class '" + typeName + "'.", cause);
 	}
 	
 	public MultipleAsteriskInsteadException(Class<?> type) {

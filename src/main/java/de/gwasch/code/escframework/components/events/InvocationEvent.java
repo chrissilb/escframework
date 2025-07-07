@@ -21,10 +21,12 @@ public class InvocationEvent extends AbstractEvent {
 
 	private MetaMethod method;
 	private Object[] args;
+//	private boolean oneway;
 	
 	public InvocationEvent() {
 		method = null;
 		args = null;
+//		oneway = false;
 	}
 	
 	public InvocationEvent(Object source, MetaMethod method, Object[] args) {
@@ -43,6 +45,7 @@ public class InvocationEvent extends AbstractEvent {
 		
 		this.method = method;
 		this.args = args;
+//		oneway = false;
 	}
 	
 	public InvocationEvent clone() {
@@ -73,6 +76,14 @@ public class InvocationEvent extends AbstractEvent {
 	public void setArgs(Object[] args) {
 		this.args = args;
 	}
+	
+//	public boolean isOneway() {
+//		return oneway;
+//	}
+//	
+//	public void setOneway(boolean oneway) {
+//		this.oneway = oneway;
+//	}
 	
 	public boolean equals(Object obj) {
 		if (! (obj instanceof InvocationEvent)) {

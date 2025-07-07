@@ -48,6 +48,7 @@ import de.gwasch.code.escframework.components.patterns.WithinRuleFactory;
 import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.events.TimerAction;
 import de.gwasch.code.escframework.events.patterns.PatternMatcher;
+import de.gwasch.code.escframework.events.patterns.PostEventListener;
 import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.processors.Dispatcher;
 import de.gwasch.code.escframework.events.processors.Initializer;
@@ -65,14 +66,14 @@ import de.gwasch.code.escframework.utils.gapsort.GapSorter;
  */
 public class InstanceAllocator {
 	
-	private static class ReturnPredicate implements Predicate<ReturnEvent> {
-
-		public boolean test(ReturnEvent t) {
-			return !t.getInvocationEvent().getMethod().isOneway();
-		}
-	}
+//	private static class ReturnPredicate implements Predicate<ReturnEvent> {
+//
+//		public boolean test(ReturnEvent t) {
+//			return !t.getInvocationEvent().getMethod().isOneway();
+//		}
+//	}
 	
-	private static final Predicate<ReturnEvent> RETURN_PREDICATE = new ReturnPredicate();
+//	private static final Predicate<ReturnEvent> RETURN_PREDICATE = new ReturnPredicate();
 
 	private static Map<Class<?>, MetaType> types;
 	private static Processor<TimerAction<Event>> timerPN;
@@ -80,7 +81,9 @@ public class InstanceAllocator {
 	
 	private static EventOutputStream<InvocationEvent> stubOut;
 	private static EventInputStream<ReturnEvent> stubIn;
-	private static EventOutputStream<ReturnEvent> skeletonOut;
+//	private static EventOutputStream<ReturnEvent> skeletonOut;
+	private static InvocationPostEventHandler invocationPostEventHandler;
+	private static InvocationManager invocationManager;
 	private static Dispatcher<Event> dispatcher;
 	private static PatternMatcher patternMatcher;
 	private static Map<Class<? extends Annotation>, RuleFactory<? extends Annotation>> ruleFactories;
@@ -103,19 +106,27 @@ public class InstanceAllocator {
 			.add(new Initializer<>())
 			.add(new TimerHandler<>(timerPN))
 			.add(patternDispatcher = new Dispatcher<>("patternDispatcher"))
-			.add(dispatcher = new Dispatcher<>()).top();			
+			.add(dispatcher = new Dispatcher<>())
+			.top();			
 						
 		// configure stub
 		stubOut = new EventOutputStream<>(invocationPN);
 		stubIn = new EventInputStream<>();
 	
 		// configure skeleton			
-		skeletonOut = new EventOutputStream<>(invocationPN);
+//		skeletonOut = new EventOutputStream<>(invocationPN);
 		
 		//configure pattern matcher
 		patternMatcher = new PatternMatcher(patternDispatcher, invocationPN);
+		invocationPostEventHandler = new InvocationPostEventHandler();
+		invocationPostEventHandler.setProcessor(invocationPN);
+		patternMatcher.setPostEventListener(invocationPostEventHandler);
+		invocationManager = new InvocationManager();
+		invocationManager.setStreams(stubIn, stubOut);
+		patternMatcher.setActionManager(invocationManager);
+		dispatcher.register(patternMatcher, ReturnEvent.class, stubIn.getEventHandler());
+				
 		ruleFactories = new HashMap<>();
-		
 		addRuleFactory(After.class, new AfterRuleFactory());
 		addRuleFactory(Delay.class, new DelayRuleFactory());
 		addRuleFactory(Less.class, new LessRuleFactory());
@@ -134,6 +145,10 @@ public class InstanceAllocator {
 	
 	public static PatternMatcher getPatternMatcher() {
 		return patternMatcher;
+	}
+	
+	public static InvocationManager getInvocationManager() {
+		return invocationManager;
 	}
 	
 	public static void addType(Class<?> impltype) {
@@ -302,8 +317,8 @@ public class InstanceAllocator {
 			
 			for (AsteriskMethod asteriskMethod : metaType.getAsteriskMethods()) {
 				
-				if (asteriskMethod.getAsteriskType() == AsteriskType.ALL_INSTEAD 
-					|| asteriskMethod.getAsteriskType() == AsteriskType.ELSE_INSTEAD) {
+				if (asteriskMethod.getAsteriskType() == AsteriskType.INSTEAD_ALL 
+					|| asteriskMethod.getAsteriskType() == AsteriskType.INSTEAD_ELSE) {
 					
 					if (hasInsteadMethod) {
 						throw new MultipleAsteriskInsteadException(implType);
@@ -473,6 +488,16 @@ public class InstanceAllocator {
 		return true;
 	}
 		
+//	public static InvocationEvent createOnewayInvocationEvent(Object thiz, String methodName) {
+//		InvocationEvent ie = createInvocationEvent(thiz, methodName);
+//		
+//		if (ie != null) {
+//			ie.setOneway(true);
+//		}
+//		
+//		return ie;
+//	}
+	
 	public static InvocationEvent createInvocationEvent(Object thiz, String methodName) {
 		return createInvocationEvent(thiz, methodName, new Class<?>[0], void.class);
 	}
@@ -631,10 +656,11 @@ public class InstanceAllocator {
 			
 			// install streams
 			dispatcher.register(skeleton, ReturnEvent.class, stubIn.getEventHandler());
-			dispatcher.registerListenerPredicate(stubIn.getEventHandler(), RETURN_PREDICATE);
-			stub.setStreams(stubIn, stubOut);
+//			dispatcher.registerListenerPredicate(stubIn.getEventHandler(), RETURN_PREDICATE);
+//			stub.setStreams(stubIn, stubOut);
 			dispatcher.register(new ProxyWrapper((Proxy)proxy), InvocationEvent.class, skeleton.getEventHandler());
-			skeleton.setOut(skeletonOut);
+//			skeleton.setOut(skeletonOut);
+			skeleton.setPostEventListener(invocationPostEventHandler);
 			
 			proxySkeletonMap.put(new ProxyWrapper((Proxy)proxy), skeleton);	//todo, eigentlich werden nur die thiz-proxys benötigt
 			

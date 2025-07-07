@@ -45,7 +45,7 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 
 	private List<EventListener<E>> listeners = null;
 
-	// todo, Laufzeitoptimierung: Listen im Vorfeld aufbereiten
+	// todo, Laufzeitoptimierung: Listeners im Vorfeld aufbereiten
 
 	private void retrieveListener(Map<Class<? extends Event>, List<EventListener<? extends Event>>> innerMap,
 			Class<?> eventClass) {
@@ -90,11 +90,6 @@ public class Dispatcher<E extends Event> extends Processor<E> {
 				retrieveListener(innerMap, event.getClass());
 			}
 		}
-
-		// assert listeners.size() > 0;
-//		if (listeners.size() == 0 && !getName().equals("patternDispatcher") && !getName().equals("timer") && !getName().equals("transition")) {
-//			System.out.println("Dispatcher: hier");
-//		}
 
 		return listeners;
 	}

@@ -241,7 +241,7 @@ public class MetaType implements GapComparable<MetaType> {
 			guardedMethods.addAll(extension.getAllGuardedMethods());
 		}
 
-		//NOTE: expansions are not considered because they do not belong to "this" Object
+		//NOTE: expansions are not considered because they do not belong to "this" Object		todo
 		
 		return guardedMethods;
 	}

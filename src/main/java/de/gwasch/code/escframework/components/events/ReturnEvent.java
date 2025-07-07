@@ -6,28 +6,23 @@ import de.gwasch.code.escframework.events.events.AbstractEvent;
 /**
  * A {@code ReturnEvent} gives feedback to an {@link InvocationEvent}.
  */
-//todo, methode fehlt zum vergleich?
 public class ReturnEvent extends AbstractEvent {
 
 	private InvocationEvent invocationEvent;
 	private Object returnValue;
+	private Throwable exception;
 	
-	public ReturnEvent(Skeleton source, InvocationEvent invocationEvent, Object value) {
+	public ReturnEvent(Object source, InvocationEvent invocationEvent, Object value, Throwable exception) {
 		setSource(source);
 		this.invocationEvent = invocationEvent;
 		returnValue = value;
+		this.exception = exception;
 	}
 	
-	public ReturnEvent(Skeleton source, InvocationEvent invocationEvent) {
-		this(source, invocationEvent, null);
+	public ReturnEvent(Object source, InvocationEvent invocationEvent) {
+		this(source, invocationEvent, null, null);
 	}
-	
-	
-//	public ReturnEvent clone() {
-//		ReturnEvent clone = new ReturnEvent(returnValue);
-//		return clone;
-//	}
-	
+		
 	public InvocationEvent getInvocationEvent() {
 		return invocationEvent;
 	}
@@ -36,9 +31,9 @@ public class ReturnEvent extends AbstractEvent {
 		return returnValue;
 	}
 	
-//	public void setReturnValue(Object value) {
-//		returnValue = value;
-//	}
+	public Throwable getThrowable() {
+		return exception;
+	}
 	
 	public boolean equals(Object obj) {
 		if (! (obj instanceof ReturnEvent)) {

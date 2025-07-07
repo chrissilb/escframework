@@ -238,7 +238,8 @@ public class GeneralRule extends Rule {
 	//NOTE: method can be overridden to decide if or if no actionEvent shall be sent.
 	protected void processAction(Event actionEvent) {
 		assert actionEvent != null;
-		getPatternMatcher().getProcessor().process(actionEvent);
+//		getPatternMatcher().getProcessor().process(actionEvent);
+		getPatternMatcher().getActionManager().invoke(getPatternMatcher(), actionEvent);
 	}
 	
 	public void onActionFinishEvent() {

@@ -22,7 +22,9 @@ import de.gwasch.code.escframework.components.utils.AsteriskType;
  * INSTEAD methods ({@code AsteriskType.ALL_INSTEAD},
  * {@code AsteriskType.ELSE_INSTEAD} must have a qualified signature. Methods
  * with another {@code AsteriskType} must have a simple or parameterized
- * signature because they are call "in addition".
+ * signature because they are called "in addition".
+ * <p>
+ * INSTEAD methods usually call the replaced method explicitly.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

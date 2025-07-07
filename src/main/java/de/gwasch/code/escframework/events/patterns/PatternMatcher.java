@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import de.gwasch.code.escframework.components.events.InvocationEvent;
 import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.listeners.EventAdapter;
 import de.gwasch.code.escframework.events.processors.Dispatcher;
@@ -42,7 +43,7 @@ import de.gwasch.code.escframework.events.processors.Processor;
  */
 public class PatternMatcher {
 
-	class ActionFinishEventControl implements EventControl {
+	private class ActionFinishEventControl implements EventControl {
 
 		public String getTypeName() {
 			return "actionFinish";
@@ -63,22 +64,22 @@ public class PatternMatcher {
 		}
 	}
 
-	class EventHandler extends EventAdapter<Event> {
+	private class EventHandler extends EventAdapter<Event> {
 
 		public boolean onProcess(Event event) {
 
+			boolean consumed = false;
+			Throwable throwable = null;
+			
 			try {
-
-				boolean consume = false;
-
 				if (event instanceof TriggerIntervalEvent) {
-					consume = true;
+					consumed = true;
 					TriggerIntervalEvent triggerIntervalEvent = (TriggerIntervalEvent) event;
 					Rule rule = triggerIntervalEvent.getRule();
 					rule.setLastEvent(triggerIntervalEvent);
 					rule.onTriggerIntervalEvent();
 				} else if (event instanceof ActionIntervalEvent) {
-					consume = true;
+					consumed = true;
 					ActionIntervalEvent actionIntervalEvent = (ActionIntervalEvent) event;
 					Rule rule = actionIntervalEvent.getRule();
 					rule.setLastEvent(actionIntervalEvent);
@@ -89,16 +90,43 @@ public class PatternMatcher {
 					for (controlEventIndex = 0; controlEventIndex < eventControlTypes.size(); controlEventIndex++) {
 						EventControlType cet = eventControlTypes.get(controlEventIndex);
 						for (EventControl ce : cet.getEventControls()) {
-							consume |= ce.onEvent(event);
+							consumed |= ce.onEvent(event);
 						}
 					}
 				}
 
-				return !consume;
-			} catch (Exception e) {
-				throw new RuntimeException(e);
+//				return !consume;
+			} catch (Throwable t) {
+//				throw new RuntimeException(e);
+				throwable = t;
 			}
+			
+//			if (consumed && event instanceof InvocationEvent) {
+//				System.out.println("hier");
+//			}
+			
+//			return !consumed;
+			return postEventHandler.onProcess(PatternMatcher.this, event, consumed, null, throwable);
 		}
+	}
+	
+	private class DefaultPostEventHandler implements PostEventListener {
+		
+		public boolean onProcess(Object source, Event event, boolean consumed, Object returnValue, Throwable throwable) {
+			if (throwable != null) {
+				throw new RuntimeException(throwable);
+			}
+			return !consumed;
+		}
+	}
+	
+	private class DefaultActionnManager implements ActionManager {
+
+		public Object invoke(Object service, Event event) {
+			processor.process(event);
+			return null;
+		}
+		
 	}
 
 	// Current restrictions:
@@ -108,7 +136,10 @@ public class PatternMatcher {
 	private Dispatcher<Event> dispatcher;
 	private Processor<Event> processor;
 	private EventHandler eventHandler;
-
+	
+	private PostEventListener postEventHandler;
+	private ActionManager actionManager;
+	
 	private List<Rule> rules;
 	private List<EventControlType> eventControlTypes;
 
@@ -118,6 +149,8 @@ public class PatternMatcher {
 		this.dispatcher = dispatcher;
 		this.processor = processor;
 		eventHandler = new EventHandler();
+		postEventHandler = new DefaultPostEventHandler();
+		actionManager = new DefaultActionnManager(); 
 
 		rules = new ArrayList<>();
 		actionFinishEventRulesMap = new HashMap<>();
@@ -140,6 +173,18 @@ public class PatternMatcher {
 
 	public Processor<Event> getProcessor() {
 		return processor;
+	}
+	
+	public void setPostEventListener(PostEventListener listener) {
+		postEventHandler = listener;
+	}
+	
+	public ActionManager getActionManager() {
+		return actionManager;	
+	}
+	
+	public void setActionManager(ActionManager actionManager) {
+		this.actionManager = actionManager;
 	}
 
 	public void addRule(Rule rule) {

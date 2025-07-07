@@ -6,6 +6,7 @@ import java.lang.reflect.Modifier;
 public class MetaMethod {
 
 	private Method method;
+
 		
 	public MetaMethod(Method method) {
 		assert method != null;
@@ -17,9 +18,9 @@ public class MetaMethod {
 		return method.getName();
 	}
 	
-	public boolean isOneway() {
-		return method.getReturnType() == void.class;
-	}
+//	public boolean isOneway() {
+//		return method.getReturnType() == void.class;
+//	}
 	
 	public int getParameterCount() {
 		return method.getParameterCount();
