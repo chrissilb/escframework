@@ -16,15 +16,27 @@ public class Logger {
 		filters.add(".*", true);
 	}
 
-	public static void log(String s) {
+	/**
+	 * Logs a message if it is accepted by filters.
+	 * 
+	 * @param message the log message
+	 */
+	public static void log(String message) {
 		if (filters != null) {
-			if (!filters.accept(s))
+			if (!filters.accept(message))
 				return;
 		}
 
-		System.out.println(s);
+		System.out.println(message);
 	}
 
+	/**
+	 * Logs a message if it is accepted by filters.
+	 * 
+	 * @param context   the context of the message
+	 * @param processor the processor
+	 * @param event     the event to log
+	 */
 	public static void log(String context, Processor<?> processor, Event event) {
 //		log(context + ": " + processor + ": " + threadToString() + ": " + event);
 	}

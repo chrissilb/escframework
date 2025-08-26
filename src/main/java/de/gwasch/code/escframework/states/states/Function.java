@@ -9,6 +9,10 @@ package de.gwasch.code.escframework.states.states;
  */
 public interface Function<T> {
 
+	/**
+	 * Returns the function result.
+	 * @return the function result
+	 */
 	T getValue();
 
 }

@@ -1,10 +1,17 @@
 package de.gwasch.code.escframework.utils.combinatorics;
 
 
-
+/**
+ * Provides helper functions for statistics.
+ */
 public class Statistics {
 
-
+	/**
+	 * Calculates the binomial coefficient.
+	 * @param n Number of values
+	 * @param k Number of selected values
+	 * @return The binomial coefficient
+	 */
 	public static int binomial(int n, int k) {		
 		int val = 1;
 
@@ -30,6 +37,11 @@ public class Statistics {
 		return val;	
 	}
 
+	/**
+	 * Calculates the faculty of {@code n}.
+	 * @param n The base number to calculate its faculty
+	 * @return The faculty
+	 */
 	public static int fac(int n) {
 		
 		int val = 1;

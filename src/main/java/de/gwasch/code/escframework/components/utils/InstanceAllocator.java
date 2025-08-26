@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import de.gwasch.code.escframework.components.annotations.After;
 import de.gwasch.code.escframework.components.annotations.Asterisk;
@@ -48,7 +47,6 @@ import de.gwasch.code.escframework.components.patterns.WithinRuleFactory;
 import de.gwasch.code.escframework.events.events.Event;
 import de.gwasch.code.escframework.events.events.TimerAction;
 import de.gwasch.code.escframework.events.patterns.PatternMatcher;
-import de.gwasch.code.escframework.events.patterns.PostEventListener;
 import de.gwasch.code.escframework.events.patterns.Rule;
 import de.gwasch.code.escframework.events.processors.Dispatcher;
 import de.gwasch.code.escframework.events.processors.Initializer;
@@ -135,6 +133,9 @@ public class InstanceAllocator {
 		addRuleFactory(Within.class, new WithinRuleFactory());
 	}
 	
+	private InstanceAllocator() {
+	}
+	
 	public static Processor<TimerAction<Event>> getTimerPN() {
 		return timerPN;
 	}
@@ -151,19 +152,19 @@ public class InstanceAllocator {
 		return invocationManager;
 	}
 	
-	public static void addType(Class<?> impltype) {
+	private static void addType(Class<?> implType) {
 		
 		MetaType metatype = new MetaType();
-		metatype.setImplementationType(impltype);
+		metatype.setImplementationType(implType);
 		
-		if (impltype.isAnnotationPresent(Service.class)) {
-			Service a = impltype.getAnnotation(Service.class);
+		if (implType.isAnnotationPresent(Service.class)) {
+			Service a = implType.getAnnotation(Service.class);
 			metatype.setInterfaceType(a.type());
 			metatype.setBaseType(a.inherits());
 			metatype.setInstantiable(a.instantiable());
 		}
-		else if (impltype.isAnnotationPresent(Extension.class)) {
-			Extension a = impltype.getAnnotation(Extension.class);
+		else if (implType.isAnnotationPresent(Extension.class)) {
+			Extension a = implType.getAnnotation(Extension.class);
 			metatype.setInterfaceType(a.type());
 			metatype.setBaseType(a.inherits());
 			metatype.setExtendingType(a.extendz());
@@ -174,15 +175,12 @@ public class InstanceAllocator {
 //			metatype.setAutoDelegate(a.autoDelegate());
 		}
 		else {
-			throw new InvalidTypeException(impltype);
+			throw new InvalidTypeException(implType);
 		}
 		
 		types.put(metatype.getInterfaceType(), metatype);
 	}
 	
-//	public static boolean isManaged(Class<?> type) {
-//		return types.containsKey(type);
-//	}
 	
 	public static void collectTypes() {
 
@@ -487,17 +485,7 @@ public class InstanceAllocator {
 		
 		return true;
 	}
-		
-//	public static InvocationEvent createOnewayInvocationEvent(Object thiz, String methodName) {
-//		InvocationEvent ie = createInvocationEvent(thiz, methodName);
-//		
-//		if (ie != null) {
-//			ie.setOneway(true);
-//		}
-//		
-//		return ie;
-//	}
-	
+			
 	public static InvocationEvent createInvocationEvent(Object thiz, String methodName) {
 		return createInvocationEvent(thiz, methodName, new Class<?>[0], void.class);
 	}
@@ -689,7 +677,7 @@ public class InstanceAllocator {
 	}
 	
 	
-	public static <T extends Annotation> void addRuleFactory(Class<T> ruleAnnotationType, RuleFactory<T> ruleFactory) {
+	private static <T extends Annotation> void addRuleFactory(Class<T> ruleAnnotationType, RuleFactory<T> ruleFactory) {
 				
 		if (!ruleAnnotationType.isAnnotationPresent(de.gwasch.code.escframework.components.annotations.Rule.class)) {
 			throw new InvalidRuleAnnotationException(ruleAnnotationType);

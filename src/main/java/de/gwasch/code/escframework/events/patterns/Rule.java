@@ -10,7 +10,7 @@ import de.gwasch.code.escframework.states.states.State;
 /**
  * A {@code Rule} is the main entity of a {@link PatternMatcher}. It contains a
  * group of incoming event patterns and further conditions. Based on this it
- * creates ongoing events.
+ * creates outgoing events.
  */
 public abstract class Rule {
 
@@ -39,7 +39,10 @@ public abstract class Rule {
 	private int actionCount;
 	private Event lastEvent;
 
-	protected Rule() {
+	/**
+	 * Creates a new Rule.
+	 */
+	public Rule() {
 		name = null;
 		ruleMode = new SimpleState<>(RuleMode.class, "ruleMode");
 		ruleMode.setValue(RuleMode.INACTIVE);
@@ -66,11 +69,15 @@ public abstract class Rule {
 		lastEvent = null;
 	}
 
+	/**
+	 * Returns the corresponding pattern matcher.
+	 * @return the corresponding pattern matcher
+	 */
 	public PatternMatcher getPatternMatcher() {
 		return patternMatcher;
 	}
 
-	public void setPatternMatcher(PatternMatcher patternMatcher) {
+	void setPatternMatcher(PatternMatcher patternMatcher) {
 		this.patternMatcher = patternMatcher;
 	}
 

@@ -5,6 +5,9 @@ package de.gwasch.code.escframework.states.utils;
  */
 public class EnumUtil {
 	
+	private EnumUtil() {
+	}
+	
 	/**
 	 * Increments an enum value by 1 according to its ordinal number.
 	 * 

@@ -11,15 +11,7 @@ public class EventOutputStream<E extends Event> {
 	public EventOutputStream(Processor<Event> processor) {
 		this.processor = processor;
 	}
-	
-//	public Processor<Event> getProcessor() {
-//		return processor;
-//	}
-//	
-//	public void setProcessor(Processor<Event> processor) {
-//		this.processor = processor;
-//	}
-	
+
 	//todo, Exception werfen, wenn fehlgeschlagen
 	public void writeEvent(E event) {
 		processor.process(event);

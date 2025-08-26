@@ -136,13 +136,12 @@ public class CodeGenerator {
 	}
 	
 	private String basePackageName;
-//	private String outputFolder;
-	private Path outputPath;
+	private Path targetPath;
 	private Map<String, Class<?>> systemRuleAnnotations;
 	private Map<String, AnnotationDeclaration> appRuleAnnotations;
 
 	private SourceRoot sourceRoot;
-	private SourceRoot outputRoot;
+	private SourceRoot targetRoot;
 	
 	private Map<String, GenType> genTypes;
 	
@@ -156,13 +155,19 @@ public class CodeGenerator {
 	private Map<String, Set<String>> serviceSubtypes;
 	
 
-	public CodeGenerator(Path sourcePath, String basePackageName, Path outputPath) {
+	/**
+	 * Creates a {@code CodeGenerator}.
+	 * @param sourcePath the source path to find components. In Maven project e.g. "src/main/java"
+	 * @param basePackageName the base package name to restrict searching for components
+	 * @param targetPath the path for generated files. In Maven projects e.g. "target/generated-sources"
+	 */
+	public CodeGenerator(Path sourcePath, String basePackageName, Path targetPath) {
 
 		if (basePackageName == null || basePackageName.length() == 0) {
 			throw new GenerationException("basePackageName is undefined.");
 		}
 		this.basePackageName = basePackageName;
-		this.outputPath = outputPath;
+		this.targetPath = targetPath;
 		
 		systemRuleAnnotations = new HashMap<>();
 		loadFrameworkRuleAnnotations();
@@ -171,16 +176,22 @@ public class CodeGenerator {
 		sourceRoot = new SourceRoot(sourcePath);
 
 		try {
-			Files.createDirectories(outputPath);
+			Files.createDirectories(targetPath);
 		}
 		catch(IOException e) {
 			throw new GenerationException(e);
 		}
-		outputRoot = new SourceRoot(outputPath);
+		targetRoot = new SourceRoot(targetPath);
 	}
 
-	public CodeGenerator(String sourceFolder, String basePackageName, String outputFolder) {
-		this(Path.of(sourceFolder), basePackageName, Path.of(outputFolder));
+	/**
+	 * Creates a {@code CodeGenerator}.
+	 * @param sourceFolder the source path to find components. In Maven project e.g. "src/main/java"
+	 * @param basePackageName the base package name to restrict searching for components
+	 * @param targetFolder the path for generated files. In Maven projects e.g. "target/generated-sources"
+	 */
+	public CodeGenerator(String sourceFolder, String basePackageName, String targetFolder) {
+		this(Path.of(sourceFolder), basePackageName, Path.of(targetFolder));
 	}
 	
 	protected String getInterfaceName(String implTypeName) {
@@ -709,12 +720,12 @@ public class CodeGenerator {
 			JavaParser parser = new JavaParser();
 	        ParseResult<CompilationUnit> pr = parser.parse(genTypes.get(typeName).toString());
 			CompilationUnit cu = pr.getResult().get();
-			Path path = outputPath.resolve(typeName.replace(".", FileSystems.getDefault().getSeparator()) + ".java");
+			Path path = targetPath.resolve(typeName.replace(".", FileSystems.getDefault().getSeparator()) + ".java");
 			cu.setStorage(path);
-			outputRoot.add(cu);
+			targetRoot.add(cu);
 		}
 		
-		outputRoot.saveAll();
+		targetRoot.saveAll();
 		
 		if (classes.size() == 0) {
 			System.out.println("Nothing to generate. 0 components found below package '" + basePackageName + "'.");

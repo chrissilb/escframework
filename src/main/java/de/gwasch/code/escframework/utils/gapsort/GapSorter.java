@@ -3,7 +3,7 @@ package de.gwasch.code.escframework.utils.gapsort;
 import java.util.List;
 
 import de.gwasch.code.escframework.utils.combinatorics.Combination;
-import de.gwasch.code.escframework.utils.combinatorics.Permutation;
+import de.gwasch.code.escframework.utils.combinatorics.Variation;
 import de.gwasch.code.escframework.utils.gapsort.GapComparable.Result;
 
 public class GapSorter {
@@ -13,7 +13,7 @@ public class GapSorter {
 		if (list.size() < 2) return;
 		
 		MaskedList<T> mlist = new MaskedList<T>(list);
-		Permutation p = new Permutation(list.size(), 0);
+		Variation p = new Variation(list.size(), list.size(), false);
 		
 		for (int[] combi : p) {
 			mlist.setMapping(combi);
@@ -28,7 +28,7 @@ public class GapSorter {
 	
 	private static <T extends GapComparable<? super T>> boolean isSorted(List<T> list) { 
 		
-		Combination c = new Combination(list.size(), 2, 0);
+		Combination c = new Combination(list.size(), 2, false);
 		boolean sorted = true;
 		
 		for (int[] combi : c) {

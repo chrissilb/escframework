@@ -9,7 +9,7 @@ public class InvalidTypeException extends RuntimeException {
 		this(typeName, null);
 	}
 	
-	public InvalidTypeException(String typeName, Throwable cause) {
+	private InvalidTypeException(String typeName, Throwable cause) {
 		super("Type '" + typeName + "' invalid.", cause);
 	}
 	
@@ -17,7 +17,7 @@ public class InvalidTypeException extends RuntimeException {
 		this(type.getName(), null);
 	}
 	
-	public InvalidTypeException(Class<?> type, Throwable cause) {
-		this(type.getName(), cause);
-	}
+//	public InvalidTypeException(Class<?> type, Throwable cause) {
+//		this(type.getName(), cause);
+//	}
 }

@@ -1,6 +1,5 @@
 package de.gwasch.code.escframework.components.utils;
 
-
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,54 +11,78 @@ import de.gwasch.code.escframework.components.annotations.Service;
 import de.gwasch.code.escframework.components.exceptions.GenerationException;
 
 /**
- * {@code ComponentClassLoader} loads components, i.e. classes annotated by {@link Service} or {@link Extension}.
+ * {@code ComponentClassLoader} loads components, i.e. classes annotated by
+ * {@link Service} or {@link Extension}.
  */
 public class ComponentClassLoader {
-	
+
 	private ClassLoader classLoader;
 	private String basePackageName;
 
+	/**
+	 * Creates a {@code ComponentClassLoader}.
+	 * 
+	 * @param classLoader     the actual class loader
+	 * @param basePackageName base package name which reduces potential classes to
+	 *                        those in this package or below
+	 */
 	public ComponentClassLoader(ClassLoader classLoader, String basePackageName) {
 		this.classLoader = classLoader;
 		this.basePackageName = basePackageName;
 	}
-	
+
+	/**
+	 * Creates a {@code ComponentClassLoader} using the system class loader.
+	 */
 	public ComponentClassLoader() {
 		this(ClassLoader.getSystemClassLoader(), "");
 	}
 
-	public ComponentClassLoader(ClassLoader contextClassLoader) {
-		this(contextClassLoader, "");
+	/**
+	 * Creates a {@code ComponentClassLoader}.
+	 * 
+	 * @param classLoader the actual class loader
+	 */
+	public ComponentClassLoader(ClassLoader classLoader) {
+		this(classLoader, "");
 	}
 
+	/**
+	 * Creates a {@code ComponentClassLoader} using the system class loader.
+	 * 
+	 * @param basePackageName base package name which reduces potential classes to
+	 *                        those in this package or below
+	 */
 	public ComponentClassLoader(String basePackageName) {
 		this(ClassLoader.getSystemClassLoader(), basePackageName);
 	}
 
+	/**
+	 * Returns classes which are components.
+	 * @return classes which are components
+	 */
 	public List<Class<?>> getClasses() {
 
 		try {
 			String path = basePackageName.replace('.', '/');
-	
-			
+
 			Enumeration<URL> resources = classLoader.getResources(path);
-	
+
 			List<File> dirs = new ArrayList<File>();
-	
+
 			while (resources.hasMoreElements()) {
 				URL resource = resources.nextElement();
 				dirs.add(new File(resource.getFile()));
 			}
-	
+
 			ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
-	
+
 			for (File directory : dirs) {
 				classes.addAll(findClasses(directory, basePackageName));
 			}
-	
+
 			return classes;
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			throw new GenerationException(e);
 		}
 	}
@@ -71,7 +94,7 @@ public class ComponentClassLoader {
 		if (!directory.exists()) {
 			return classes;
 		}
-		
+
 		if (packageName.length() > 0) {
 			packageName = packageName + '.';
 		}
@@ -82,12 +105,11 @@ public class ComponentClassLoader {
 
 			if (file.isDirectory()) {
 				classes.addAll(findClasses(file, packageName + file.getName()));
-			} 
-			else if (file.getName().endsWith(".class")) {
+			} else if (file.getName().endsWith(".class")) {
 				String clsname = packageName + file.getName().substring(0, file.getName().length() - 6);
-				
+
 				Class<?> cls = classLoader.loadClass(clsname);
-				
+
 				if (cls.isAnnotationPresent(Service.class) || cls.isAnnotationPresent(Extension.class)) {
 					classes.add(cls);
 				}
